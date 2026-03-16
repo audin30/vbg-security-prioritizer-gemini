@@ -19,6 +19,7 @@ This document defines the SQL and logic used to correlate and prioritize securit
 - **External Visibility Bonus**: `+50` if the asset is found in Tenable ASM.
 - **Management/OOB Subnet Bonus**: `+30` if the asset is in a Management or OOB subnet (from phpIPAM).
 - **Gateway Bonus**: `+20` if the asset is marked as a Gateway in phpIPAM.
+- **VirusTotal Malicious Bonus**: `+50` if the asset is flagged by 5+ security vendors in VirusTotal.
 - **Cross-Tool Confirmation Bonus**: `+20` if the vulnerability is detected by both Tenable and Wiz.
 
 ## Standard Prioritization Query
@@ -61,7 +62,9 @@ WITH
             EXISTS (SELECT 1 FROM public.tenable_asm_assets asm WHERE asm.hostname = v.hostname OR asm.ip_address = v.ip_address) as in_asm,
             -- Check phpIPAM context
             EXISTS (SELECT 1 FROM public.phpipam_assets ipam WHERE (ipam.hostname = v.hostname OR ipam.ip_address = v.ip_address) AND (ipam.subnet_description ILIKE '%MGMT%' OR ipam.subnet_description ILIKE '%OOB%')) as in_mgmt_subnet,
-            EXISTS (SELECT 1 FROM public.phpipam_assets ipam WHERE (ipam.hostname = v.hostname OR ipam.ip_address = v.ip_address) AND ipam.is_gateway = true) as is_gateway
+            EXISTS (SELECT 1 FROM public.phpipam_assets ipam WHERE (ipam.hostname = v.hostname OR ipam.ip_address = v.ip_address) AND ipam.is_gateway = true) as is_gateway,
+            -- Check VirusTotal Reputation (Placeholder logic - assuming vt_results table)
+            EXISTS (SELECT 1 FROM public.vt_results vt WHERE (vt.target = v.hostname OR vt.target = v.ip_address) AND vt.malicious >= 5) as is_vt_malicious
         FROM all_vulns v
         GROUP BY v.cve_id, v.hostname, v.ip_address
     )
@@ -77,6 +80,7 @@ SELECT
         (CASE WHEN p.in_asm THEN 50 ELSE 0 END) + 
         (CASE WHEN p.in_mgmt_subnet THEN 30 ELSE 0 END) + 
         (CASE WHEN p.is_gateway THEN 20 ELSE 0 END) + 
+        (CASE WHEN p.is_vt_malicious THEN 50 ELSE 0 END) + 
         (CASE WHEN p.sources LIKE '%,%' THEN 20 ELSE 0 END)
     ) as priority_score
 FROM prioritized_findings p
