@@ -21,6 +21,7 @@ The workspace is organized into discrete skill directories, each containing its 
 | **`alienvault-otx`** | Checks indicators against threat pulses. | AlienVault OTX API |
 | **`chronicle-query`** | Queries SIEM events and detections. | Google Chronicle API |
 | **`talos-intelligence`** | Reputation lookups from Cisco Talos. | Talos Intelligence |
+| **`vulnerability-validator`** | Validates vulnerabilities via active scans. | Nuclei, Nmap |
 | **`csv-writer`** | Exports JSON data to CSV files. | Local Node.js Script |
 
 ---
