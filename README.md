@@ -2,7 +2,7 @@
 
 > Built with [Claude Code](https://claude.ai/code)
 
-This project is a centralized repository for specialized security operations skills focused on threat intelligence and vulnerability prioritization. These skills empower **Claude Code** and the Gemini CLI to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
+This project is a centralized repository for specialized security operations skills focused on threat intelligence and vulnerability prioritization. These skills empower **Claude Code** to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
 
 ## 🚀 Featured Skills
 
@@ -20,17 +20,7 @@ This project is a centralized repository for specialized security operations ski
 
 ## 🛠️ Getting Started
 
-1.  **Install a skill**:
-    ```bash
-    gemini skills install ./<skill-name>.skill --scope user
-    ```
-2.  **Activate**:
-    Reload the engine in your interactive session:
-    ```bash
-    /skills reload
-    ```
-
-For detailed architecture and development workflows, see [GEMINI.md](GEMINI.md) and [CLAUDE.md](CLAUDE.md).
+For detailed architecture and development workflows, see [CLAUDE.md](CLAUDE.md).
 
 ---
 
