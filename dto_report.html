@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DTO Asset Vulnerability Report — 3/23/2026, 3:00:45 PM</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; font-size: 13px; line-height: 1.5; }
+    .page { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+    /* Header */
+    .header { border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 28px; }
+    h1 { font-size: 22px; font-weight: 700; color: #0f172a; }
+    .subtitle { color: #64748b; font-size: 12px; margin-top: 4px; }
+    .header-meta { display: flex; gap: 24px; margin-top: 10px; flex-wrap: wrap; }
+    .meta-item { font-size: 12px; color: #64748b; }
+    .meta-item strong { color: #1e293b; }
+
+    /* Section headings */
+    h2 { font-size: 15px; font-weight: 700; color: #0f172a; margin: 32px 0 10px; border-left: 4px solid #3b82f6; padding-left: 10px; }
+
+    /* Summary cards */
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 8px; }
+    .card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
+    .card-value { font-size: 30px; font-weight: 700; }
+    .card-label { font-size: 11px; color: #64748b; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .card.red .card-value { color: #dc2626; }
+    .card.orange .card-value { color: #ea580c; }
+    .card.blue .card-value { color: #2563eb; }
+    .card.purple .card-value { color: #7c3aed; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom: 8px; }
+    th { background: #f1f5f9; text-align: left; padding: 9px 12px; font-size: 11px; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; white-space: nowrap; }
+    td { padding: 9px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f8fafc; }
+    .mono { font-family: 'Courier New', monospace; font-size: 12px; }
+
+    /* Priority badge */
+    .pri-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; color: white; }
+
+    /* Score badge */
+    .score-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 13px; color: white; }
+
+    /* Row colors */
+    .row-critical td { background: #fef2f2 !important; }
+    .row-high td { background: #fff7ed !important; }
+    .row-medium td { background: #fefce8 !important; }
+
+    /* Notes */
+    .note { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #1e40af; margin: 0 0 14px; }
+    .warn { background: #fef9c3; border: 1px solid #fde68a; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #92400e; margin: 0 0 14px; }
+    .urgent { background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #991b1b; margin: 0 0 14px; }
+
+    /* KEV badge */
+    .kev-badge { background: #7c3aed; color: white; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 700; white-space: nowrap; }
+
+    /* Owner name */
+    .owner-name { font-weight: 600; color: #1e293b; }
+    .owner-unassigned { font-weight: 700; color: #dc2626; }
+
+    .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center; }
+
+    @media print {
+      body { background: white; font-size: 11px; }
+      .page { padding: 16px; max-width: 100%; }
+      h2 { page-break-before: auto; }
+      table { page-break-inside: avoid; font-size: 10px; }
+      .cards { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>DTO Asset Vulnerability Report</h1>
+    <p class="subtitle">CISA KEV findings correlated with DTO-tagged Tenable assets and named owners</p>
+    <div class="header-meta">
+      <div class="meta-item"><strong>Generated:</strong> 3/23/2026, 3:00:45 PM</div>
+      <div class="meta-item"><strong>Asset window:</strong> Active last 90 days</div>
+      <div class="meta-item"><strong>Focus:</strong> CISA Known Exploited Vulnerabilities (KEV) only</div>
+      <div class="meta-item"><strong>Scoring:</strong> KEV base 100 + CVSS score</div>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <h2>Summary</h2>
+  <div class="cards">
+    <div class="card blue">
+      <div class="card-value">10,575</div>
+      <div class="card-label">Active DTO Assets</div>
+    </div>
+    <div class="card red">
+      <div class="card-value">1,217</div>
+      <div class="card-label">DTO Assets with KEV</div>
+    </div>
+    <div class="card purple">
+      <div class="card-value">67</div>
+      <div class="card-label">Unique KEV CVEs Found</div>
+    </div>
+    <div class="card orange">
+      <div class="card-value">1,551</div>
+      <div class="card-label">Total CISA KEV Catalog</div>
+    </div>
+  </div>
+
+  <!-- Owner Remediation Table -->
+  <h2>Remediation Assignments by Owner</h2>
+  <div class="urgent">⚠ All findings below are CISA KEV vulnerabilities — actively exploited in the wild. Treat as P1 regardless of CVSS score.</div>
+  <div class="note">Owners sourced from Tenable tag <code>DTO_On_Prem_Citrix</code>. Unassigned assets need immediate owner assignment before remediation can begin.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Priority</th>
+        <th>Owner / Contact</th>
+        <th>Assets w/ KEV</th>
+        <th>Unique KEVs</th>
+        <th>Max Exposure Score</th>
+        <th>KEV CVEs</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr class="row-critical">
+        <td><strong>1</strong></td>
+        <td><span class="pri-badge" style="background:#dc2626">CRITICAL</span></td>
+        <td class="owner-unassigned">DTO - Unassigned</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">821</td>
+        <td style="text-align:center;font-weight:600">49</td>
+        <td style="text-align:center">933</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2017-0001</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2017-12615</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2017-12617</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-0920</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-22600</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-40438</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-44228</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-45046</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2022-0185</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2022-22674</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2022-32893</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-20867</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-28204</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-28206</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-32434</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-41064</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-44487</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-4863</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-4966</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-5217</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-6548</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-38226</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-44308</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-4577</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-53150</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-8068</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-9680</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-0411</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-14174</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-14847</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-22224</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-24201</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-24813</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-27363</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-31200</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-41244</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-43200</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-43300</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-55177</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-6543</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-7775</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-8088</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-21509</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-24061</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-high">
+        <td><strong>2</strong></td>
+        <td><span class="pri-badge" style="background:#ea580c">HIGH</span></td>
+        <td class="owner-name">Batch 5</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">47</td>
+        <td style="text-align:center;font-weight:600">13</td>
+        <td style="text-align:center">756</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-44228</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-45046</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-44308</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-43200</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-43300</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-55177</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-8088</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-21509</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-high">
+        <td><strong>3</strong></td>
+        <td><span class="pri-badge" style="background:#ea580c">HIGH</span></td>
+        <td class="owner-name">Citrix - Ran Chen</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">42</td>
+        <td style="text-align:center;font-weight:600">21</td>
+        <td style="text-align:center">700</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2019-17558</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-11023</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-15999</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-30858</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-3156</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-4034</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-44228</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2022-32893</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-20867</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-42793</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-44487</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-4863</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-27198</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-14847</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-27363</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-41244</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-48384</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-24061</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-high">
+        <td><strong>4</strong></td>
+        <td><span class="pri-badge" style="background:#ea580c">HIGH</span></td>
+        <td class="owner-name">Citrix - No owners</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">42</td>
+        <td style="text-align:center;font-weight:600">15</td>
+        <td style="text-align:center">757</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-11023</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-15999</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-4034</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-20867</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-44487</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-4863</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-14847</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-27363</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-41244</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-24061</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>5</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Citrix - Ben Perry</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">27</td>
+        <td style="text-align:center;font-weight:600">4</td>
+        <td style="text-align:center">689</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>6</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Citrix - Steven Padron</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">25</td>
+        <td style="text-align:center;font-weight:600">5</td>
+        <td style="text-align:center">689</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>7</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Citrix - Xinyang N</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">24</td>
+        <td style="text-align:center;font-weight:600">5</td>
+        <td style="text-align:center">689</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>8</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Batch 6</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">22</td>
+        <td style="text-align:center;font-weight:600">7</td>
+        <td style="text-align:center">777</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-7775</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-21509</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-high">
+        <td><strong>9</strong></td>
+        <td><span class="pri-badge" style="background:#ea580c">HIGH</span></td>
+        <td class="owner-name">Citrix - Network Operations</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">19</td>
+        <td style="text-align:center;font-weight:600">17</td>
+        <td style="text-align:center">700</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-15999</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-22555</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-22600</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-4034</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-40438</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2022-2586</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-20867</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-23529</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-44487</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-4863</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-4966</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-6548</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-27363</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-41244</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-6543</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-7775</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-24061</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>10</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Citrix - Carl Fallis</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">17</td>
+        <td style="text-align:center;font-weight:600">14</td>
+        <td style="text-align:center">696</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-3952</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-21972</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-21985</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-34048</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-44308</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-24201</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-31200</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-41244</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-43200</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-43300</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>11</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Batch 3</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">13</td>
+        <td style="text-align:center;font-weight:600">6</td>
+        <td style="text-align:center">692</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-21509</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>12</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Batch 4</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">12</td>
+        <td style="text-align:center;font-weight:600">9</td>
+        <td style="text-align:center">691</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-6548</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-6543</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-7775</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-21509</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>13</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Citrix - George Chen</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">10</td>
+        <td style="text-align:center;font-weight:600">5</td>
+        <td style="text-align:center">691</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>14</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Praveen Pagadala</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">9</td>
+        <td style="text-align:center;font-weight:600">4</td>
+        <td style="text-align:center">690</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>15</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Sean Michelsen 3</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">9</td>
+        <td style="text-align:center;font-weight:600">4</td>
+        <td style="text-align:center">687</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>16</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Philip Eccles</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">8</td>
+        <td style="text-align:center;font-weight:600">4</td>
+        <td style="text-align:center">697</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-14174</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-24813</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-27363</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-41244</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>17</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Scott Mooney</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">7</td>
+        <td style="text-align:center;font-weight:600">5</td>
+        <td style="text-align:center">689</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>18</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Batch 1</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">6</td>
+        <td style="text-align:center;font-weight:600">5</td>
+        <td style="text-align:center">697</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-21509</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>19</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix  - JeevanKumar S</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">6</td>
+        <td style="text-align:center;font-weight:600">5</td>
+        <td style="text-align:center">696</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>20</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Kiran Kumar Srinivasa</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">6</td>
+        <td style="text-align:center;font-weight:600">4</td>
+        <td style="text-align:center">689</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>21</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Batch 2</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">5</td>
+        <td style="text-align:center;font-weight:600">13</td>
+        <td style="text-align:center">924</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2014-0546</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-44228</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-45046</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-0411</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-55177</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-6543</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-7775</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-21509</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>22</strong></td>
+        <td><span class="pri-badge" style="background:#d97706">MEDIUM</span></td>
+        <td class="owner-name">Citrix - XenServer Operations</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">5</td>
+        <td style="text-align:center;font-weight:600">9</td>
+        <td style="text-align:center">696</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-11023</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-44487</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-4863</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-22224</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-27363</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-21509</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>23</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Akshay Muralidharan</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">5</td>
+        <td style="text-align:center;font-weight:600">5</td>
+        <td style="text-align:center">691</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>24</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Sean Michelsen 2</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">5</td>
+        <td style="text-align:center;font-weight:600">3</td>
+        <td style="text-align:center">688</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>25</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Alex Voloshin</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">4</td>
+        <td style="text-align:center;font-weight:600">6</td>
+        <td style="text-align:center">581</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2013-3900</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2024-4577</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>26</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Kishore Kunisetty Soma</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">4</td>
+        <td style="text-align:center;font-weight:600">3</td>
+        <td style="text-align:center">615</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>27</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Jonathan Romerto</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">3</td>
+        <td style="text-align:center;font-weight:600">2</td>
+        <td style="text-align:center">410</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>28</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Harsha M S</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">2</td>
+        <td style="text-align:center;font-weight:600">3</td>
+        <td style="text-align:center">686</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-15999</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2021-4034</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-4863</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>29</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Dmytro Bozhko</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">2</td>
+        <td style="text-align:center;font-weight:600">2</td>
+        <td style="text-align:center">686</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>30</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Muthukumar Shunmugiah</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">2</td>
+        <td style="text-align:center;font-weight:600">1</td>
+        <td style="text-align:center">521</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2020-8193</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>31</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Karthik Somayaji</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">1</td>
+        <td style="text-align:center;font-weight:600">4</td>
+        <td style="text-align:center">688</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>32</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Simon Graham</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">1</td>
+        <td style="text-align:center;font-weight:600">4</td>
+        <td style="text-align:center">686</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>33</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix  - Vineet Kumar Chawla</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">1</td>
+        <td style="text-align:center;font-weight:600">4</td>
+        <td style="text-align:center">501</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-15556</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3909</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-3910</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>34</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Gopal Cerukurpurushothaman</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">1</td>
+        <td style="text-align:center;font-weight:600">3</td>
+        <td style="text-align:center">55</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2023-6548</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-6543</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-7775</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>35</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Gautam Badveti</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">1</td>
+        <td style="text-align:center;font-weight:600">2</td>
+        <td style="text-align:center">28</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-6543</span><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-7775</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>36</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Sean Michelsen 1</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">1</td>
+        <td style="text-align:center;font-weight:600">1</td>
+        <td style="text-align:center">63</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2026-2441</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>37</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Kasirao Velugu</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">1</td>
+        <td style="text-align:center;font-weight:600">1</td>
+        <td style="text-align:center">409</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-14847</span></td>
+      </tr>
+      <tr class="">
+        <td><strong>38</strong></td>
+        <td><span class="pri-badge" style="background:#16a34a">LOW</span></td>
+        <td class="owner-name">Citrix - Syed A</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">1</td>
+        <td style="text-align:center;font-weight:600">1</td>
+        <td style="text-align:center">607</td>
+        <td style="max-width:400px"><span style="display:inline-block;font-family:monospace;font-size:10px;padding:1px 5px;background:#e0e7ff;color:#3730a3;border-radius:3px;margin:1px 2px 1px 0">CVE-2025-27363</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Widespread CVEs -->
+  <h2>Most Widespread KEV CVEs — Affects Multiple Owners</h2>
+  <div class="note">CVEs ranked by number of distinct owner groups affected. These require coordinated remediation across teams.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>CVE ID</th>
+        <th>Vulnerability Name</th>
+        <th>Owner Groups Affected</th>
+        <th>Total Assets</th>
+        <th>Max CVSS</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr class="row-critical">
+        <td><strong>1</strong></td>
+        <td class="mono"><strong>CVE-2026-3910</strong></td>
+        <td>Google Chromium V8 Improper Restriction of Operations Within the Bounds of a Memory Buffer Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">29</td>
+        <td style="text-align:center">634</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-critical">
+        <td><strong>2</strong></td>
+        <td class="mono"><strong>CVE-2026-2441</strong></td>
+        <td>Google Chromium CSS Use-After-Free Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">28</td>
+        <td style="text-align:center">497</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-critical">
+        <td><strong>3</strong></td>
+        <td class="mono"><strong>CVE-2026-3909</strong></td>
+        <td>Google Skia Out-of-Bounds Write Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">25</td>
+        <td style="text-align:center">444</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-critical">
+        <td><strong>4</strong></td>
+        <td class="mono"><strong>CVE-2025-15556</strong></td>
+        <td>Notepad++ Download of Code Without Integrity Check Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">22</td>
+        <td style="text-align:center">167</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-critical">
+        <td><strong>5</strong></td>
+        <td class="mono"><strong>CVE-2013-3900</strong></td>
+        <td>Microsoft WinVerifyTrust function Remote Code Execution</td>
+        <td style="text-align:center;font-weight:700;color:#dc2626">19</td>
+        <td style="text-align:center">430</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-high">
+        <td><strong>6</strong></td>
+        <td class="mono"><strong>CVE-2026-21509</strong></td>
+        <td>Microsoft Office Security Feature Bypass Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">8</td>
+        <td style="text-align:center">39</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>7</strong></td>
+        <td class="mono"><strong>CVE-2025-27363</strong></td>
+        <td>FreeType Out-of-Bounds Write Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">7</td>
+        <td style="text-align:center">48</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>8</strong></td>
+        <td class="mono"><strong>CVE-2025-7775</strong></td>
+        <td>Citrix NetScaler Memory Overflow Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">7</td>
+        <td style="text-align:center">14</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>9</strong></td>
+        <td class="mono"><strong>CVE-2025-41244</strong></td>
+        <td>Broadcom VMware Aria Operations and VMware Tools Privilege Defined with Unsafe Actions Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">6</td>
+        <td style="text-align:center">26</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>10</strong></td>
+        <td class="mono"><strong>CVE-2023-4863</strong></td>
+        <td>Google Chromium WebP Heap-Based Buffer Overflow Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">6</td>
+        <td style="text-align:center">18</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>11</strong></td>
+        <td class="mono"><strong>CVE-2025-6543</strong></td>
+        <td>Citrix NetScaler ADC and Gateway Buffer Overflow Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">6</td>
+        <td style="text-align:center">13</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>12</strong></td>
+        <td class="mono"><strong>CVE-2023-44487</strong></td>
+        <td>HTTP/2 Rapid Reset Attack Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">5</td>
+        <td style="text-align:center">16</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>13</strong></td>
+        <td class="mono"><strong>CVE-2023-20867</strong></td>
+        <td>VMware Tools Authentication Bypass Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">4</td>
+        <td style="text-align:center">16</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>14</strong></td>
+        <td class="mono"><strong>CVE-2025-14847</strong></td>
+        <td>MongoDB and MongoDB Server Improper Handling of Length Parameter Inconsistency Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">4</td>
+        <td style="text-align:center">16</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>15</strong></td>
+        <td class="mono"><strong>CVE-2026-24061</strong></td>
+        <td>GNU InetUtils Argument Injection Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">4</td>
+        <td style="text-align:center">13</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>16</strong></td>
+        <td class="mono"><strong>CVE-2021-44228</strong></td>
+        <td>Apache Log4j2 Remote Code Execution Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">4</td>
+        <td style="text-align:center">8</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>17</strong></td>
+        <td class="mono"><strong>CVE-2023-6548</strong></td>
+        <td>Citrix NetScaler ADC and NetScaler Gateway Code Injection Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">4</td>
+        <td style="text-align:center">6</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>18</strong></td>
+        <td class="mono"><strong>CVE-2020-15999</strong></td>
+        <td>Google Chrome FreeType Heap Buffer Overflow Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">4</td>
+        <td style="text-align:center">4</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="row-medium">
+        <td><strong>19</strong></td>
+        <td class="mono"><strong>CVE-2021-4034</strong></td>
+        <td>Red Hat Polkit Out-of-Bounds Read and Write Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">4</td>
+        <td style="text-align:center">4</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+      <tr class="">
+        <td><strong>20</strong></td>
+        <td class="mono"><strong>CVE-2020-11023</strong></td>
+        <td>JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td style="text-align:center;font-weight:700;color:#ea580c">3</td>
+        <td style="text-align:center">35</td>
+        <td style="text-align:center">N/A</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Top Individual Findings -->
+  <h2>Top 50 Individual Findings — Highest Priority Asset+CVE Pairs</h2>
+  <div class="note">Sorted by priority score (KEV=100 + CVSS), then exposure score. Each row is a unique asset+CVE combination.</div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Score</th>
+        <th>CVE ID</th>
+        <th>Vulnerability</th>
+        <th>IP Address</th>
+        <th>CVSS</th>
+        <th>Owner / Contact</th>
+        <th>Exposure Score</th>
+        <th>Last Seen</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr class="">
+        <td><strong>1</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2023-44487</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">HTTP/2 Rapid Reset Attack Vulnerability</td>
+        <td class="mono">10.101.198.108</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - No owners</td>
+        <td style="text-align:center">701</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>2</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.198.108</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - No owners</td>
+        <td style="text-align:center">701</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>3</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-41244</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Broadcom VMware Aria Operations and VMware Tools Privilege Defined with Unsafe Actions Vulnerability</td>
+        <td class="mono">10.101.198.108</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - No owners</td>
+        <td style="text-align:center">701</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>4</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-15999</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chrome FreeType Heap Buffer Overflow Vulnerability</td>
+        <td class="mono">10.101.198.109</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Network Operations</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>5</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2021-22600</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Linux Kernel Privilege Escalation Vulnerability</td>
+        <td class="mono">10.101.198.109</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Network Operations</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>6</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.212.115</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>7</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2022-32893</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Apple iOS and macOS Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.115</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>8</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2023-44487</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">HTTP/2 Rapid Reset Attack Vulnerability</td>
+        <td class="mono">10.101.212.115</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>9</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2023-4863</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chromium WebP Heap-Based Buffer Overflow Vulnerability</td>
+        <td class="mono">10.101.212.115</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>10</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.115</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>11</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-48384</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Git Link Following Vulnerability</td>
+        <td class="mono">10.101.212.115</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>12</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.212.238</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>13</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2022-32893</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Apple iOS and macOS Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.238</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">700</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>14</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.212.201</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">694</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>15</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2023-44487</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">HTTP/2 Rapid Reset Attack Vulnerability</td>
+        <td class="mono">10.101.212.201</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">694</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>16</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2023-4863</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chromium WebP Heap-Based Buffer Overflow Vulnerability</td>
+        <td class="mono">10.101.212.201</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">694</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>17</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.201</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">694</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>18</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-2441</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chromium CSS Use-After-Free Vulnerability</td>
+        <td class="mono">10.1.1.182</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">689</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>19</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-3909</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Skia Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.1.1.182</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">689</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>20</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-3910</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chromium V8 Improper Restriction of Operations Within the Bounds of a Memory Buffer Vulnerability</td>
+        <td class="mono">10.1.1.182</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">689</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>21</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-15556</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Notepad++ Download of Code Without Integrity Check Vulnerability</td>
+        <td class="mono">10.1.1.181</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 6</td>
+        <td style="text-align:center">687</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>22</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-2441</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chromium CSS Use-After-Free Vulnerability</td>
+        <td class="mono">10.1.1.181</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 6</td>
+        <td style="text-align:center">687</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>23</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-3909</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Skia Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.1.1.181</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 6</td>
+        <td style="text-align:center">687</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>24</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-3910</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chromium V8 Improper Restriction of Operations Within the Bounds of a Memory Buffer Vulnerability</td>
+        <td class="mono">10.1.1.181</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 6</td>
+        <td style="text-align:center">687</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>25</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.212.119</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">683</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>26</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.119</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">683</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>27</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-48384</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Git Link Following Vulnerability</td>
+        <td class="mono">10.101.212.119</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">683</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>28</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.212.214</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">682</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>29</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.214</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">682</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>30</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-48384</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Git Link Following Vulnerability</td>
+        <td class="mono">10.101.212.214</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">682</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>31</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.212.230</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">681</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>32</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.230</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">681</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>33</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-48384</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Git Link Following Vulnerability</td>
+        <td class="mono">10.101.212.230</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">681</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>34</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.212.147</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">680</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>35</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.147</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">680</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>36</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.212.216</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">680</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>37</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.212.216</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">680</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>38</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2013-3900</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Microsoft WinVerifyTrust function Remote Code Execution</td>
+        <td class="mono">10.1.1.188</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">672</td>
+        <td style="font-size:11px;white-space:nowrap">Tue Mar 03 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>39</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-2441</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chromium CSS Use-After-Free Vulnerability</td>
+        <td class="mono">10.1.1.188</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">672</td>
+        <td style="font-size:11px;white-space:nowrap">Tue Mar 03 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>40</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2020-11023</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">JQuery Cross-Site Scripting (XSS) Vulnerability</td>
+        <td class="mono">10.101.192.105</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">669</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>41</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-27363</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">FreeType Out-of-Bounds Write Vulnerability</td>
+        <td class="mono">10.101.192.105</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">669</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>42</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-48384</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Git Link Following Vulnerability</td>
+        <td class="mono">10.101.192.105</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">669</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>43</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2019-17558</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Apache Solr VelocityResponseWriter Plug-In Remote Code Execution Vulnerability</td>
+        <td class="mono">10.101.212.224</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">656</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>44</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2021-44228</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Apache Log4j2 Remote Code Execution Vulnerability</td>
+        <td class="mono">10.101.212.224</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Citrix - Ran Chen</td>
+        <td style="text-align:center">656</td>
+        <td style="font-size:11px;white-space:nowrap">Mon Mar 23 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>45</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2013-3900</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Microsoft WinVerifyTrust function Remote Code Execution</td>
+        <td class="mono">10.1.1.182</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">640</td>
+        <td style="font-size:11px;white-space:nowrap">Tue Mar 03 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>46</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2013-3900</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Microsoft WinVerifyTrust function Remote Code Execution</td>
+        <td class="mono">10.1.1.187</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">624</td>
+        <td style="font-size:11px;white-space:nowrap">Tue Mar 03 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>47</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2013-3900</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Microsoft WinVerifyTrust function Remote Code Execution</td>
+        <td class="mono">10.1.1.183</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">613</td>
+        <td style="font-size:11px;white-space:nowrap">Tue Mar 03 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>48</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2013-3900</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Microsoft WinVerifyTrust function Remote Code Execution</td>
+        <td class="mono">10.1.1.190</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 3</td>
+        <td style="text-align:center">613</td>
+        <td style="font-size:11px;white-space:nowrap">Tue Mar 03 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>49</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-2441</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Google Chromium CSS Use-After-Free Vulnerability</td>
+        <td class="mono">10.1.1.128</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 6</td>
+        <td style="text-align:center">602</td>
+        <td style="font-size:11px;white-space:nowrap">Tue Mar 03 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
+      </tr>
+      <tr class="">
+        <td><strong>50</strong></td>
+        <td><span class="score-badge" style="background:#d97706">100.0</span></td>
+        <td class="mono" style="white-space:nowrap"><strong>CVE-2013-3900</strong>&nbsp;<span class="kev-badge">KEV</span></td>
+        <td style="font-size:12px">Microsoft WinVerifyTrust function Remote Code Execution</td>
+        <td class="mono">10.1.1.181</td>
+        <td style="text-align:center">N/A</td>
+        <td class="owner-name" style="font-size:12px">Batch 6</td>
+        <td style="text-align:center">599</td>
+        <td style="font-size:11px;white-space:nowrap">Sun Feb 22 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Immediate Actions -->
+  <h2>Recommended Immediate Actions</h2>
+  <div class="urgent">
+    <strong>1. Assign ownership to 821 unassigned assets</strong> — 49 KEV CVEs with no named owner. Escalate to DTO program manager before remediating.<br><br>
+    <strong>2. Contact Ran Chen</strong> — 42 assets with Log4Shell (CVE-2021-44228), JetBrains TeamCity RCE, Sudo Baron Samedit. Broadest vulnerability spread.<br><br>
+    <strong>3. Contact Carl Fallis</strong> — VMware vCenter RCEs (CVE-2021-21972, CVE-2021-21985, CVE-2023-34048). These are actively exploited against unpatched vCenter.<br><br>
+    <strong>4. Contact Network Operations</strong> — Citrix Bleed (CVE-2023-4966), Apache SSRF (CVE-2021-40438) on network infrastructure. Highest systemic risk.<br><br>
+    <strong>5. Global browser patch push</strong> — CVE-2026-2441, CVE-2026-3909, CVE-2026-3910 (Chromium) affect 20+ owner groups. Coordinate enterprise-wide Chrome/Chromium update.
+  </div>
+
+  <div class="footer">
+    DTO Asset Vulnerability Report &bull; Generated 3/23/2026, 3:00:45 PM &bull; Source: vuln_db (Tenable + CISA KEV) &bull; Confidential
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 40px; }
+        .header { border-bottom: 3px solid #dc2626; padding-bottom: 20px; margin-bottom: 30px; }
+        .priority { background: #dc2626; color: white; padding: 4px 12px; border-radius: 4px; font-weight: bold; }
+        .asset-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin: 20px 0; }
+        .finding-box { border-left: 4px solid #dc2626; background: #fff1f2; padding: 15px; margin: 15px 0; }
+        .footer { margin-top: 50px; font-size: 12px; color: #6b7280; text-align: center; border-top: 1px solid #e5e7eb; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span class="priority">CRITICAL PRIORITY</span>
+        <h1>Remediation Alert: Toxic Combination</h1>
+    </div>
+    <p><strong>To:</strong> Gaddam Srinivas<br><strong>Asset:</strong> ubuntu (20.13.168.53)</p>
+    <div class="asset-card">
+        <h3>Asset Details</h3>
+        <p>Max CVSS: 9.8 | CVEs: 267 | Env: bpme-dev</p>
+    </div>
+    <div class="finding-box">
+        <h3>Findings</h3>
+        <p>Port 22 (SSH) is OPEN to the global internet. The asset is highly vulnerable to RCE and unauthorized access.</p>
+    </div>
+    <h3>Actions Required</h3>
+    <ul>
+        <li>Restrict SSH access to VPN only.</li>
+        <li>Patch 267 unpatched vulnerabilities.</li>
+    </ul>
+    <div class="footer">Gemini CLI Security Prioritization Engine</div>
+</body>
+</html>

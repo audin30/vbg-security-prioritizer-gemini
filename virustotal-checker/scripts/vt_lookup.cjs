@@ -55,24 +55,21 @@ const req = https.get(options, (res) => {
         const json = JSON.parse(body);
         const stats = json.data.attributes.last_analysis_stats;
         const total = Object.values(stats).reduce((a, b) => a + b, 0);
-        const malicious = stats.malicious;
 
-        console.log(`\nVirusTotal Analysis for ${target}:`);
-        console.log(`-----------------------------------`);
-        console.log(`Malicious: ${malicious}`);
-        console.log(`Suspicious: ${stats.suspicious}`);
-        console.log(`Undetected: ${stats.undetected}`);
-        console.log(`Harmless: ${stats.harmless}`);
-        console.log(`Total Scanners: ${total}`);
-        console.log(`Reputation: ${json.data.attributes.reputation}`);
-        console.log(`Report Link: https://www.virustotal.com/gui/${type === 'ip' ? 'ip-address' : 'domain'}/${target}`);
-        
-        if (malicious > 0) {
-            console.log(`\n[ALERT] This asset has been flagged by ${malicious} security vendors.`);
-        } else {
-            console.log(`\n[CLEAN] No malicious detections found.`);
-        }
+        const result = {
+          target,
+          type,
+          malicious: stats.malicious,
+          suspicious: stats.suspicious,
+          undetected: stats.undetected,
+          harmless: stats.harmless,
+          total_scanners: total,
+          reputation: json.data.attributes.reputation,
+          report_link: `https://www.virustotal.com/gui/${type === 'ip' ? 'ip-address' : 'domain'}/${target}`,
+          is_flagged: stats.malicious > 0
+        };
 
+        console.log(JSON.stringify(result, null, 2));
       } catch (e) {
         console.error(`Error parsing JSON response: ${e.message}`);
       }

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Prioritization — Architecture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #050810;
+    --panel:     #0a0f1e;
+    --border:    #1a2540;
+    --green:     #00ffa3;
+    --blue:      #00b4ff;
+    --orange:    #ff6b35;
+    --purple:    #9d5cff;
+    --red:       #ff3366;
+    --yellow:    #ffe066;
+    --text:      #c8d8f0;
+    --muted:     #4a607a;
+    --mono:      'Share Tech Mono', monospace;
+    --head:      'Orbitron', sans-serif;
+    --body:      'Rajdhani', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── noise overlay ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .wrap {
+    position: relative; z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* ── header ── */
+  .hdr {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .hdr-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: fadeUp .6s .1s forwards;
+  }
+  .hdr-title {
+    font-family: var(--head);
+    font-size: clamp(22px, 4vw, 42px);
+    font-weight: 900;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 30%, var(--blue) 70%, var(--green) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    animation: fadeUp .6s .2s forwards;
+  }
+  .hdr-sub {
+    font-size: 15px;
+    color: var(--muted);
+    margin-top: 10px;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: fadeUp .6s .35s forwards;
+  }
+
+  /* ── grid layout ── */
+  .arch {
+    display: grid;
+    grid-template-columns: 260px 1fr 260px;
+    grid-template-rows: auto auto auto;
+    gap: 0;
+    position: relative;
+  }
+
+  /* ── layer labels ── */
+  .layer-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border-right: 1px solid var(--border);
+    margin-right: 24px;
+    user-select: none;
+  }
+
+  /* ── section titles ── */
+  .sec-title {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── card ── */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    position: relative;
+    transition: border-color .25s, box-shadow .25s;
+    cursor: default;
+  }
+  .card:hover {
+    border-color: var(--accent, var(--blue));
+    box-shadow: 0 0 20px -4px var(--accent, var(--blue));
+  }
+  .card-name {
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: .5px;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .card-desc {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .card-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .dot {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-right: 7px;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
+  }
+
+  /* ── COLUMNS ── */
+
+  /* LEFT — Data Sources */
+  .col-sources {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 32px;
+    opacity: 0;
+    animation: fadeUp .5s .4s forwards;
+  }
+
+  /* CENTER — Core */
+  .col-core {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    opacity: 0;
+    animation: fadeUp .5s .55s forwards;
+  }
+
+  /* RIGHT — Enrichment */
+  .col-enrich {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 32px;
+    opacity: 0;
+    animation: fadeUp .5s .4s forwards;
+  }
+
+  /* ── DATABASE block ── */
+  .db-block {
+    background: linear-gradient(135deg, #0c1428 0%, #081020 100%);
+    border: 1px solid #1e3060;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .db-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+  }
+  .db-title {
+    font-family: var(--head);
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--blue);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .db-icon {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--blue) 0%, #0066aa 100%);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .tables-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .tbl {
+    background: #060e1c;
+    border: 1px solid #152040;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #5080c0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color .2s, border-color .2s;
+  }
+  .tbl:hover { color: var(--blue); border-color: var(--blue); }
+  .tbl-icon { font-size: 11px; }
+
+  /* ── ORCHESTRATOR block ── */
+  .orch-block {
+    background: linear-gradient(135deg, #0f1a0f 0%, #081408 100%);
+    border: 1px solid #1e4020;
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .orch-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green), #00cc88);
+  }
+  .orch-title {
+    font-family: var(--head);
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--green);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .orch-icon {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--green) 0%, #009960 100%);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+  .workflows-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .wf {
+    background: #060e06;
+    border: 1px solid #152815;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #408040;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color .2s, border-color .2s;
+  }
+  .wf:hover { color: var(--green); border-color: var(--green); }
+
+  /* ── SCORING block ── */
+  .score-block {
+    background: linear-gradient(135deg, #12100a 0%, #0c0a06 100%);
+    border: 1px solid #302810;
+    border-radius: 8px;
+    padding: 18px;
+    position: relative;
+  }
+  .score-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--yellow));
+  }
+  .score-title {
+    font-family: var(--head);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--orange);
+    margin-bottom: 12px;
+  }
+  .score-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .score-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    padding: 4px 0;
+    border-bottom: 1px solid #1a1500;
+  }
+  .score-row:last-child { border-bottom: none; }
+  .score-val {
+    font-weight: bold;
+    color: var(--yellow);
+    text-shadow: 0 0 8px var(--yellow);
+  }
+
+  /* ── OUTPUTS block ── */
+  .out-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+    opacity: 0;
+    animation: fadeUp .5s .85s forwards;
+  }
+  .out-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .out-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px -6px var(--accent);
+  }
+  .out-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+  }
+  .out-icon { font-size: 22px; margin-bottom: 8px; }
+  .out-name {
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 12px;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  .out-desc {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ── CONNECTORS ── */
+  .connector-wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  svg.connectors {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* ── FLOW ARROWS (center vertical) ── */
+  .flow-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .flow-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    opacity: 0;
+    animation: fadeIn .4s .7s forwards;
+  }
+  .flow-line {
+    width: 1px;
+    height: 24px;
+    background: linear-gradient(180deg, var(--green) 0%, transparent 100%);
+    position: relative;
+  }
+  .flow-line::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: -3px;
+    width: 0; height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid var(--green);
+  }
+  .flow-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  /* ── horizontal dividers ── */
+  .hdivider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 32px 0;
+    opacity: 0;
+    animation: fadeIn .4s .6s forwards;
+  }
+
+  /* ── legend ── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 48px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp .5s 1s forwards;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  /* ── pulse animation on active dots ── */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .5; transform: scale(1.5); }
+  }
+  .pulse { animation: pulse 2s ease-in-out infinite; }
+
+  /* ── scan line effect ── */
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,255,163,.15), transparent);
+    animation: scan 8s linear infinite;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  /* ── entrance animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* ── color variants ── */
+  .c-green  { --accent: var(--green);  color: var(--green); }
+  .c-blue   { --accent: var(--blue);   color: var(--blue); }
+  .c-orange { --accent: var(--orange); color: var(--orange); }
+  .c-purple { --accent: var(--purple); color: var(--purple); }
+  .c-red    { --accent: var(--red);    color: var(--red); }
+  .c-yellow { --accent: var(--yellow); color: var(--yellow); }
+
+  /* ── glow text ── */
+  .glow-green { text-shadow: 0 0 12px var(--green); }
+  .glow-blue  { text-shadow: 0 0 12px var(--blue); }
+
+  /* ── section wrapper ── */
+  .section {
+    display: contents;
+  }
+
+  /* ── main layout: three-column ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* ── section header ── */
+  .section-hdr {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-hdr.green { color: var(--green); background: rgba(0,255,163,.06); border: 1px solid rgba(0,255,163,.15); }
+  .section-hdr.blue  { color: var(--blue);  background: rgba(0,180,255,.06); border: 1px solid rgba(0,180,255,.15); }
+  .section-hdr.orange{ color: var(--orange);background: rgba(255,107,53,.06);border: 1px solid rgba(255,107,53,.15); }
+  .section-hdr.purple{ color: var(--purple);background: rgba(157,92,255,.06);border: 1px solid rgba(157,92,255,.15); }
+
+  /* ── MCP badge ── */
+  .mcp-tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 1px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    background: rgba(0,180,255,.15);
+    color: var(--blue);
+    border: 1px solid rgba(0,180,255,.3);
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+  .api-tag {
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 1px;
+    padding: 1px 5px;
+    border-radius: 2px;
+    background: rgba(157,92,255,.15);
+    color: var(--purple);
+    border: 1px solid rgba(157,92,255,.3);
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+
+  /* ── center column inner ── */
+  .center-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── divider row ── */
+  .div-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 4px 0;
+  }
+  .div-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .div-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+  .div-arrow {
+    color: var(--green);
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  /* responsiveness */
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .col-sources, .col-enrich { padding: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-eyebrow">// system architecture</div>
+    <div class="hdr-title">Security Vulnerability Prioritization</div>
+    <div class="hdr-sub">Multi-source correlation · Risk scoring · TI enrichment · Automated reporting</div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="layout">
+
+    <!-- LEFT: DATA SOURCES -->
+    <div class="col-sources">
+      <div class="section-hdr blue">
+        <span class="dot" style="background:var(--blue);color:var(--blue)"></span>
+        Data Sources
+      </div>
+
+      <div class="card" style="--accent:var(--blue)">
+        <div class="card-badge" style="background:rgba(0,180,255,.12);color:var(--blue)">MCP</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:var(--blue);color:var(--blue)"></span>
+          <div class="card-name">Tenable VM</div>
+        </div>
+        <div class="card-desc">tenable_findings<br>tenable_assets<br>CVSS · CVE · asset inventory</div>
+      </div>
+
+      <div class="card" style="--accent:var(--blue)">
+        <div class="card-badge" style="background:rgba(0,180,255,.12);color:var(--blue)">MCP</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:var(--blue);color:var(--blue)"></span>
+          <div class="card-name">Tenable ASM</div>
+        </div>
+        <div class="card-desc">tenable_asm_assets<br>External attack surface<br>internet-exposed hostnames</div>
+      </div>
+
+      <div class="card" style="--accent:#7c5cff">
+        <div class="card-badge" style="background:rgba(124,92,255,.12);color:#7c5cff">MCP</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:#7c5cff;color:#7c5cff"></span>
+          <div class="card-name">Wiz Cloud</div>
+        </div>
+        <div class="card-desc">wiz_vulnerabilities<br>wiz_inventory<br>AWS · GCP · Azure findings</div>
+      </div>
+
+      <div class="card" style="--accent:var(--red)">
+        <div class="card-badge" style="background:rgba(255,51,102,.12);color:var(--red)">KEV</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:var(--red);color:var(--red)"></span>
+          <div class="card-name">CISA KEV</div>
+        </div>
+        <div class="card-desc">cisa_kev<br>Actively exploited CVEs<br>due dates · vendor names</div>
+      </div>
+
+      <div class="card" style="--accent:var(--orange)">
+        <div class="card-badge" style="background:rgba(255,107,53,.12);color:var(--orange)">IPAM</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:var(--orange);color:var(--orange)"></span>
+          <div class="card-name">phpIPAM</div>
+        </div>
+        <div class="card-desc">phpipam_assets<br>Subnet context · gateways<br>MGMT / OOB classification</div>
+      </div>
+
+      <!-- flow indicator -->
+      <div style="display:flex;flex-direction:column;align-items:flex-end;padding-right:4px;margin-top:8px;gap:4px;opacity:.5">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px">INGESTED TO</div>
+        <div style="display:flex;gap:2px">
+          <div style="width:4px;height:4px;background:var(--blue);border-radius:50%;animation:pulse 1.5s .0s infinite"></div>
+          <div style="width:4px;height:4px;background:var(--blue);border-radius:50%;animation:pulse 1.5s .2s infinite"></div>
+          <div style="width:4px;height:4px;background:var(--blue);border-radius:50%;animation:pulse 1.5s .4s infinite"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER: CORE ENGINE -->
+    <div class="center-inner">
+
+      <!-- PostgreSQL DB -->
+      <div class="db-block">
+        <div class="db-title">
+          <div class="db-icon">🗄</div>
+          PostgreSQL · vuln_db
+          <span style="margin-left:auto;font-family:var(--mono);font-size:9px;color:var(--muted)">localhost:5432</span>
+        </div>
+        <div class="tables-grid">
+          <div class="tbl"><span class="tbl-icon">📋</span>tenable_findings</div>
+          <div class="tbl"><span class="tbl-icon">💻</span>tenable_assets</div>
+          <div class="tbl"><span class="tbl-icon">🌐</span>tenable_asm_assets</div>
+          <div class="tbl"><span class="tbl-icon">☁️</span>wiz_vulnerabilities</div>
+          <div class="tbl"><span class="tbl-icon">📦</span>wiz_inventory</div>
+          <div class="tbl"><span class="tbl-icon">🔴</span>cisa_kev</div>
+          <div class="tbl"><span class="tbl-icon">🗺</span>phpipam_assets</div>
+          <div class="tbl"><span class="tbl-icon">🦠</span>vt_results</div>
+        </div>
+      </div>
+
+      <!-- Arrow down -->
+      <div class="div-row">
+        <div class="div-line"></div>
+        <div class="div-arrow">▼</div>
+        <div class="div-label">SQL via MCP</div>
+        <div class="div-arrow">▼</div>
+        <div class="div-line"></div>
+      </div>
+
+      <!-- Claude Orchestrator -->
+      <div class="orch-block">
+        <div class="orch-title">
+          <div class="orch-icon">⚡</div>
+          Claude Code — Orchestrator
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:12px">
+          Reads workflow files → runs SQL via MCP → executes Node.js scripts → generates reports
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--muted);margin-bottom:8px;letter-spacing:2px;text-transform:uppercase">workflows/</div>
+        <div class="workflows-grid">
+          <div class="wf">📊 security-prioritizer.md</div>
+          <div class="wf">🔍 ti-enrichment.md</div>
+          <div class="wf">📡 chronicle.md</div>
+          <div class="wf">📁 csv-export.md</div>
+        </div>
+        <!-- Scoring model inline -->
+        <div class="score-block">
+          <div class="score-title">// PRIORITY SCORING MODEL</div>
+          <div class="score-rows">
+            <div class="score-row">
+              <span>Base CVSS score</span>
+              <span class="score-val">0 – 10</span>
+            </div>
+            <div class="score-row">
+              <span>CISA KEV match</span>
+              <span class="score-val">+100</span>
+            </div>
+            <div class="score-row">
+              <span>External (ASM)</span>
+              <span class="score-val">+50</span>
+            </div>
+            <div class="score-row">
+              <span>VirusTotal malicious ≥5</span>
+              <span class="score-val">+50</span>
+            </div>
+            <div class="score-row">
+              <span>MGMT / OOB subnet</span>
+              <span class="score-val">+30</span>
+            </div>
+            <div class="score-row">
+              <span>Gateway device</span>
+              <span class="score-val">+20</span>
+            </div>
+            <div class="score-row">
+              <span>Cross-tool (Tenable + Wiz)</span>
+              <span class="score-val">+20</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrow down -->
+      <div class="div-row">
+        <div class="div-line"></div>
+        <div class="div-arrow" style="color:var(--orange)">▼</div>
+        <div class="div-label">generates</div>
+        <div class="div-arrow" style="color:var(--orange)">▼</div>
+        <div class="div-line"></div>
+      </div>
+
+      <!-- Outputs -->
+      <div>
+        <div class="section-hdr orange" style="margin-bottom:12px">
+          <span class="dot" style="background:var(--orange);color:var(--orange)"></span>
+          Outputs
+        </div>
+        <div class="out-row" style="opacity:1;animation:none">
+          <div class="out-card" style="--accent:var(--orange)">
+            <div class="out-icon">📊</div>
+            <div class="out-name">Risk Report</div>
+            <div class="out-desc">Top 20 findings<br>priority scored<br>inline analysis</div>
+          </div>
+          <div class="out-card" style="--accent:var(--green)">
+            <div class="out-icon">📄</div>
+            <div class="out-name">CSV Exports</div>
+            <div class="out-desc">Full asset list<br>priority cut<br>by subscription</div>
+          </div>
+          <div class="out-card" style="--accent:var(--blue)">
+            <div class="out-icon">🎫</div>
+            <div class="out-name">Ticket Data</div>
+            <div class="out-desc">Owner lookup<br>KEV deadlines<br>cloud admin IDs</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: TI ENRICHMENT -->
+    <div class="col-enrich">
+      <div class="section-hdr purple">
+        <span class="dot" style="background:var(--purple);color:var(--purple)"></span>
+        TI Enrichment
+      </div>
+
+      <div class="card" style="--accent:#e8a020">
+        <div class="card-badge" style="background:rgba(232,160,32,.12);color:#e8a020">Node.js</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:#e8a020;color:#e8a020"></span>
+          <div class="card-name">VirusTotal</div>
+        </div>
+        <div class="card-desc">vt_lookup.cjs<br>IP · domain · hash<br>→ persists to vt_results</div>
+      </div>
+
+      <div class="card" style="--accent:#20c0a0">
+        <div class="card-badge" style="background:rgba(32,192,160,.12);color:#20c0a0">Node.js</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:#20c0a0;color:#20c0a0"></span>
+          <div class="card-name">GreyNoise</div>
+        </div>
+        <div class="card-desc">greynoise_lookup.cjs<br>IPv4 classification<br>noise · malicious · RIOT</div>
+      </div>
+
+      <div class="card" style="--accent:#40a0e0">
+        <div class="card-badge" style="background:rgba(64,160,224,.12);color:#40a0e0">Node.js</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:#40a0e0;color:#40a0e0"></span>
+          <div class="card-name">AlienVault OTX</div>
+        </div>
+        <div class="card-desc">otx_lookup.cjs<br>Threat pulses<br>IOC reputation</div>
+      </div>
+
+      <div class="card" style="--accent:#e04040">
+        <div class="card-badge" style="background:rgba(224,64,64,.12);color:#e04040">Node.js</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:#e04040;color:#e04040"></span>
+          <div class="card-name">Cisco Talos</div>
+        </div>
+        <div class="card-desc">talos_lookup.cjs<br>OIDC auth · IP rep<br>threat categorization</div>
+      </div>
+
+      <div class="card" style="--accent:#a060ff">
+        <div class="card-badge" style="background:rgba(160,96,255,.12);color:#a060ff">Node.js</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="dot pulse" style="background:#a060ff;color:#a060ff"></span>
+          <div class="card-name">Chronicle SIEM</div>
+        </div>
+        <div class="card-desc">query_chronicle.cjs<br>Google SA auth<br>UDM event search</div>
+      </div>
+
+      <!-- flow indicator -->
+      <div style="display:flex;flex-direction:column;align-items:flex-start;padding-left:4px;margin-top:8px;gap:4px;opacity:.5">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px">SCORES FEED INTO</div>
+        <div style="display:flex;gap:2px">
+          <div style="width:4px;height:4px;background:var(--purple);border-radius:50%;animation:pulse 1.5s .0s infinite"></div>
+          <div style="width:4px;height:4px;background:var(--purple);border-radius:50%;animation:pulse 1.5s .2s infinite"></div>
+          <div style="width:4px;height:4px;background:var(--purple);border-radius:50%;animation:pulse 1.5s .4s infinite"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /layout -->
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--blue);color:var(--blue)"></div>
+      MCP Server (direct DB access)
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--purple);color:var(--purple)"></div>
+      Node.js Script (REST API)
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--green);color:var(--green)"></div>
+      Claude Code Orchestrator
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--orange);color:var(--orange)"></div>
+      Output Artifact
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:var(--red);color:var(--red)"></div>
+      KEV Catalog
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="text-align:center;margin-top:40px;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;opacity:0;animation:fadeIn .5s 1.2s forwards">
+    gem-securityprioritization · Claude Code + PostgreSQL MCP · 2026
+  </div>
+
+</div>
+</body>
+</html>

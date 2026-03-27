@@ -81,7 +81,7 @@ SELECT
         (CASE WHEN p.in_mgmt_subnet THEN 30 ELSE 0 END) + 
         (CASE WHEN p.is_gateway THEN 20 ELSE 0 END) + 
         (CASE WHEN p.is_vt_malicious THEN 50 ELSE 0 END) + 
-        (CASE WHEN p.sources LIKE '%,%' THEN 20 ELSE 0 END)
+        (CASE WHEN p.sources LIKE '%Tenable%' AND p.sources LIKE '%Wiz%' THEN 20 ELSE 0 END)
     ) as priority_score
 FROM prioritized_findings p
 LEFT JOIN public.cisa_kev ck ON p.cve_id = ck.cve_id

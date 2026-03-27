@@ -17,6 +17,7 @@ This skill enables Gemini CLI to act as a security analyst by correlating vulner
   - `public.wiz_inventory`
   - `public.cisa_kev`
   - `public.phpipam_assets`
+  - `public.vt_results` (columns: `target`, `malicious` — populated by the `virustotal-checker` skill)
 
 ## Workflows
 
@@ -33,7 +34,10 @@ When asked to prioritize findings or generate a risk report:
 - **Base**: CVSS Score (0-10)
 - **CISA KEV**: +100
 - **External Visibility (ASM)**: +50
-- **Cross-Tool Confirmation**: +20
+- **VirusTotal Malicious (5+ vendors)**: +50
+- **Management/OOB Subnet (phpIPAM)**: +30
+- **Gateway Device (phpIPAM)**: +20
+- **Cross-Tool Confirmation (Tenable + Wiz)**: +20
 
 ## Example Requests
 
