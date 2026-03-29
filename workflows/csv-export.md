@@ -6,7 +6,7 @@ Triggered when the user asks to export results to CSV, save as a spreadsheet, or
 
 1. Write the data as a JSON array to a temp file:
    ```bash
-   # Claude writes the JSON from a previous query result
+   # Gemini CLI writes the JSON from a previous query result
    echo '<json_array>' > /tmp/export_data.json
    ```
 

@@ -48,13 +48,39 @@ After installing or modifying a skill, reload the engine:
 
 ---
 
+## 🔍 Security Analysis Workflows
+
+Before performing any workflow, you can refer to the corresponding file in `workflows/`:
+
+- **Prioritize findings / risk report** → read `workflows/security-prioritizer.md`, then run SQL via PostgreSQL MCP.
+- **Enrich an IP/domain/hash** → read `workflows/ti-enrichment.md`, then run the appropriate script(s).
+- **Check Chronicle SIEM** → read `workflows/chronicle.md`, then run the script.
+- **Export to CSV** → read `workflows/csv-export.md`, then run the csv-writer script.
+
+### Prioritization Scoring Model (`security-prioritizer`)
+
+The SQL in `security-prioritizer/references/logic.md` is the ground truth. Scores:
+- Base CVSS: 0–10
+- CISA KEV: +100
+- External (ASM): +50
+- VirusTotal malicious (≥5 vendors, via `public.vt_results`): +50
+- Management/OOB subnet (phpIPAM): +30
+- Gateway device (phpIPAM): +20
+- Cross-tool confirmation (both Tenable AND Wiz): +20
+
+### Required PostgreSQL Tables
+
+`tenable_findings`, `tenable_assets`, `tenable_asm_assets`, `wiz_vulnerabilities`, `wiz_inventory`, `cisa_kev`, `phpipam_assets`, `vt_results` (columns: `target`, `malicious`)
+
+---
+
 ## 🔑 Prerequisites & Configuration
 
 Most skills in this workspace require API keys or specific environment variables:
 
 - **Security APIs**: `VIRUSTOTAL_API_KEY`, `GREYNOISE_API_KEY`, `OTX_API_KEY`.
-- **Infrastructure**: The `security-prioritizer` skill requires a connection to a **PostgreSQL MCP Server** containing specific table schemas for Tenable, Wiz, and CISA KEV data (see `security-prioritizer/SKILL.md` for details).
-- **Runtime**: All script-based skills run on **Node.js**. Ensure `node` is available in your path.
+- **Infrastructure**: The `security-prioritizer` skill requires a connection to a **PostgreSQL MCP Server** (`vuln_db`).
+- **Runtime**: All script-based skills run on **Node.js**. Ensure `node` is available in your path and run `npm install` in the root.
 
 ## 📝 Conventions
 

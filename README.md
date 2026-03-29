@@ -1,8 +1,8 @@
 # 🤖 Security Prioritizer & TI Skills Workspace
 
-> Built with [Claude Code](https://claude.ai/code)
+> Built with Gemini CLI
 
-This project is a centralized repository for specialized security operations skills focused on threat intelligence and vulnerability prioritization. These skills empower **Claude Code** to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
+This project is a centralized repository for specialized security operations skills focused on threat intelligence and vulnerability prioritization. These skills empower **Gemini CLI** to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
 
 ## 🚀 Featured Skills
 
@@ -20,8 +20,8 @@ This project is a centralized repository for specialized security operations ski
 
 ## 🛠️ Getting Started
 
-For detailed architecture and development workflows, see [CLAUDE.md](CLAUDE.md).
+For detailed architecture and development workflows, see [GEMINI.md](GEMINI.md).
 
 ---
 
-🤖 Generated with [Claude Code](https://claude.ai/code)
+🤖 Generated with Gemini CLI
