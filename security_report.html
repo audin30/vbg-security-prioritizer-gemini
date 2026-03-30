@@ -2,1066 +2,427 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Security Prioritization Report — 3/23/2026, 12:55:55 PM</title>
+  <title>Security Prioritization Report — 3/28/2026, 11:10:19 PM</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; font-size: 13px; }
-    .page { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
-    h1 { font-size: 24px; font-weight: 700; color: #0f172a; }
-    h2 { font-size: 16px; font-weight: 700; color: #0f172a; margin: 32px 0 12px; border-left: 4px solid #3b82f6; padding-left: 10px; }
-    h3 { font-size: 13px; font-weight: 600; color: #475569; margin-bottom: 4px; }
-    .subtitle { color: #64748b; font-size: 12px; margin-top: 4px; }
-    .header { border-bottom: 2px solid #e2e8f0; padding-bottom: 20px; margin-bottom: 24px; }
-    .header-meta { display: flex; gap: 24px; margin-top: 12px; flex-wrap: wrap; }
-    .meta-item { font-size: 12px; color: #64748b; }
-    .meta-item strong { color: #1e293b; }
-
-    /* Summary cards */
-    .cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 8px; }
-    .card { background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
-    .card-value { font-size: 28px; font-weight: 700; color: #1e293b; }
-    .card-label { font-size: 11px; color: #64748b; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .card.red .card-value { color: #dc2626; }
-    .card.orange .card-value { color: #ea580c; }
-    .card.blue .card-value { color: #2563eb; }
-
-    /* Tables */
-    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
-    th { background: #f1f5f9; text-align: left; padding: 10px 12px; font-size: 11px; font-weight: 600; color: #475569; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; }
-    td { padding: 10px 12px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
-    tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #f8fafc; }
-    .mono { font-family: 'Courier New', monospace; font-size: 12px; }
-    .score-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-weight: 700; font-size: 13px; color: white; }
-
-    /* Priority row highlights */
-    .pri-critical td { background: #fef2f2 !important; }
-    .pri-high td { background: #fff7ed !important; }
-
-    /* Section note */
-    .note { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #1e40af; margin: 8px 0 16px; }
-    .warn { background: #fef9c3; border: 1px solid #fde68a; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #92400e; margin: 8px 0 16px; }
-
-    .tag { display: inline-block; font-size: 11px; padding: 1px 6px; border-radius: 3px; margin: 1px; background: #e2e8f0; color: #475569; }
-
-    .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e2e8f0; font-size: 11px; color: #94a3b8; text-align: center; }
-
-    @media print {
-      body { background: white; }
-      .page { padding: 16px; }
-      h2 { page-break-before: auto; }
-      table { page-break-inside: avoid; }
-    }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; color: #334155; margin: 0; padding: 20px; }
+    .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    h1 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: 30px; }
+    .stat-card { background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; }
+    .stat-val { font-size: 24px; font-weight: bold; color: #2563eb; }
+    .stat-label { font-size: 12px; color: #64748b; text-transform: uppercase; margin-top: 5px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th { text-align: left; background: #f8fafc; padding: 12px; border-bottom: 2px solid #e2e8f0; font-size: 12px; }
+    td { padding: 12px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+    .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; color: white; }
+    .exposed { background: #ef4444; }
+    .internal { background: #10b981; }
+    .score-pill { padding: 4px 12px; border-radius: 20px; color: white; font-weight: bold; }
+    .toxic { border: 2px solid #ef4444; background: #fee2e2; }
+    .footer { margin-top: 40px; font-size: 11px; color: #94a3b8; text-align: center; }
   </style>
 </head>
 <body>
-<div class="page">
+<div class="container">
+  <h1>Security Prioritization Report</h1>
+  <p><strong>Generated:</strong> 3/28/2026, 11:10:19 PM | <strong>Model:</strong> Toxic Combination v2</p>
 
-  <!-- Header -->
-  <div class="header">
-    <h1>Security Prioritization Report</h1>
-    <p class="subtitle">Correlating Tenable VM, Tenable ASM, Wiz, and CISA KEV data</p>
-    <div class="header-meta">
-      <div class="meta-item"><strong>Generated:</strong> 3/23/2026, 12:55:55 PM</div>
-      <div class="meta-item"><strong>Database:</strong> vuln_db @ localhost:5432</div>
-      <div class="meta-item"><strong>Scoring:</strong> CVSS + KEV (+100) + External (+50) + MGMT subnet (+30) + Gateway (+20) + VT malicious (+50)</div>
-    </div>
+  <div class="stats">
+    <div class="stat-card"><div class="stat-val">45472</div><div class="stat-label">Active Assets</div></div>
+    <div class="stat-card"><div class="stat-val">1553</div><div class="stat-label">CISA KEV</div></div>
+    <div class="stat-card"><div class="stat-val">3508</div><div class="stat-label">Public (ASM)</div></div>
+    <div class="stat-card"><div class="stat-val">33100</div><div class="stat-label">Public (Cloud)</div></div>
+    <div class="stat-card"><div class="stat-val">23174</div><div class="stat-label">Enriched Assets</div></div>
   </div>
 
-  <!-- Summary Cards -->
-  <h2>Data Summary</h2>
-  <div class="cards">
-    <div class="card blue">
-      <div class="card-value">44,639</div>
-      <div class="card-label">Active Tenable Assets</div>
-    </div>
-    <div class="card">
-      <div class="card-value">3,913,141</div>
-      <div class="card-label">Total Findings</div>
-    </div>
-    <div class="card red">
-      <div class="card-value">1,551</div>
-      <div class="card-label">CISA KEV Entries</div>
-    </div>
-    <div class="card orange">
-      <div class="card-value">3,619</div>
-      <div class="card-label">Active ASM Assets (30d)</div>
-    </div>
-    <div class="card">
-      <div class="card-value">4,048,995</div>
-      <div class="card-label">Active Wiz Findings</div>
-    </div>
-  </div>
-
-  <!-- ASM Severity Breakdown -->
-  <h2>Attack Surface Severity Breakdown</h2>
-  <div class="note">Assets seen in Tenable ASM within the last 30 days, grouped by exposure severity.</div>
-  <table>
-    <thead><tr><th>Severity</th><th>Unique IPs</th><th>Total Records</th></tr></thead>
-    <tbody>
-      
-      <tr>
-        <td><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">critical</span></td>
-        <td><strong>51</strong></td>
-        <td>96</td>
-      </tr>
-      <tr>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td><strong>55</strong></td>
-        <td>100</td>
-      </tr>
-      <tr>
-        <td><span style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">medium</span></td>
-        <td><strong>192</strong></td>
-        <td>293</td>
-      </tr>
-      <tr>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td><strong>1,644</strong></td>
-        <td>3,230</td>
-      </tr>
-      <tr>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td><strong>1,986</strong></td>
-        <td>4,976</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Top Prioritized Public Assets -->
-  <h2>Top Prioritized Assets — Active & Publicly Exposed</h2>
-  <div class="note">Assets confirmed active in Tenable (last 90 days) AND present in ASM (last 30 days). Score = CVSS + KEV×100 + Exposure bonus + Criticality.</div>
+  <h2>Top 25 Critical Assets</h2>
   <table>
     <thead>
       <tr>
-        <th>#</th>
-        <th>IP Address</th>
+        <th>Asset / IP</th>
+        <th>Owner / BU</th>
         <th>Score</th>
-        <th>Total CVEs</th>
-        <th>KEV CVEs</th>
-        <th>Critical</th>
-        <th>High</th>
+        <th>Risk Factors</th>
         <th>Max CVSS</th>
-        <th>Exposure Score</th>
-        <th>ASM Severity</th>
-        <th>Exposed Ports/Services</th>
-        <th>ASM Last Seen</th>
-        <th>KEV CVE List</th>
+        <th>Sources</th>
       </tr>
     </thead>
     <tbody>
       
-      <tr class="pri-critical">
-        <td><strong>1</strong></td>
-        <td class="mono"><strong>192.168.1.100</strong></td>
-        <td><span class="score-badge" style="background:#dc2626">1180</span></td>
-        <td style="text-align:center">75</td>
-        <td style="text-align:center"><strong style="color:#dc2626">11</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">689.0</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td class="mono" style="font-size:11px">No port data</td>
-        <td style="font-size:11px">Thu Mar 05 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-        <td style="font-size:11px;max-width:200px"><span class="tag">CVE-2013-3900</span><span class="tag">CVE-2024-44308</span><span class="tag">CVE-2025-15556</span><span class="tag">CVE-2025-24201</span><span class="tag">CVE-2025-31200</span><span class="tag">CVE-2025-43200</span><span class="tag">CVE-2025-43300</span><span class="tag">CVE-2026-21509</span><span class="tag">CVE-2026-2441</span><span class="tag">CVE-2026-3909</span><span class="tag">CVE-2026-3910</span></td>
+      <tr class="toxic">
+        <td><strong>Wordpress-Demo web server</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#991b1b">309.8</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>TDV-PostgresNonSSL</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#991b1b">309.8</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>ctxdevassist</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>usw01cavtco01</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>AZ-VSI02</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>2</strong></td>
-        <td class="mono"><strong>162.221.157.24</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">2</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">46.0</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td class="mono" style="font-size:11px">80/http</td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>jx-de13-sd36</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>3</strong></td>
-        <td class="mono"><strong>166.49.149.14</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">1</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">20.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">No port data</td>
-        <td style="font-size:11px">Sun Mar 08 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>guedjasgaz01</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge internal">INTERNAL</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>4</strong></td>
-        <td class="mono"><strong>160.101.130.26</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">1</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">20.0</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td class="mono" style="font-size:11px">22/Cerberus FTP Server sshd 2024</td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>SH_BW611_user09</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>5</strong></td>
-        <td class="mono"><strong>121.241.189.1</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">1</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">20.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">No port data</td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>markpcf1</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>usw00mgvgit01</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>Jeff Levetin - TRAININGDB.TIBCO.COM - DO NOT USE/DELETE</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>6</strong></td>
-        <td class="mono"><strong>121.241.189.3</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">1</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">20.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">No port data</td>
-        <td style="font-size:11px">Sat Mar 14 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>(DO NOT DELETE)sbamzai-Tenable OVA instance</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>7</strong></td>
-        <td class="mono"><strong>121.241.189.97</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">1</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">26.0</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td class="mono" style="font-size:11px">22/Cisco SSH 1.25</td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>shu-de12-122</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>levsieast2</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>8</strong></td>
-        <td class="mono"><strong>10.79.13.17</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">1</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">32.0</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td class="mono" style="font-size:11px">No port data</td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>SH_BW611_user00</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>9</strong></td>
-        <td class="mono"><strong>160.101.130.129</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">443/https</td>
-        <td style="font-size:11px">Wed Mar 11 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>guedjasjrw01</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge internal">INTERNAL</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>usw90cavtco01</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>10</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>Danni_Spotfire</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>10</strong></td>
-        <td class="mono"><strong>160.101.130.141</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">medium</span></td>
-        <td class="mono" style="font-size:11px">443/https</td>
-        <td style="font-size:11px">Mon Mar 09 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>Dev C-level-blog</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="toxic">
+        <td><strong>JRS-9.0.0-hf</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
+        <td>
+          
+          <span class="badge exposed">EXPOSED</span>
+          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>11</strong></td>
-        <td class="mono"><strong>160.101.130.128</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">443/, 443/https</td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>CloudOpsPortal02</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>12</strong></td>
-        <td class="mono"><strong>160.101.130.146</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">medium</span></td>
-        <td class="mono" style="font-size:11px">443/Citrix NetScaler httpd</td>
-        <td style="font-size:11px">Sun Mar 08 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>CloudEngine01</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>13</strong></td>
-        <td class="mono"><strong>160.101.130.148</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">medium</span></td>
-        <td class="mono" style="font-size:11px">443/</td>
-        <td style="font-size:11px">Mon Mar 09 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>CloudOpsPortal01</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>14</strong></td>
-        <td class="mono"><strong>160.101.130.150</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">443/https</td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>JapanWest-MonitoringVM</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>15</strong></td>
-        <td class="mono"><strong>160.101.130.140</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">443/https</td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
-      </tr>
-      <tr class="">
-        <td><strong>16</strong></td>
-        <td class="mono"><strong>160.101.130.21</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td class="mono" style="font-size:11px">443/https</td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
-      </tr>
-      <tr class="">
-        <td><strong>17</strong></td>
-        <td class="mono"><strong>160.101.130.137</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">443/https</td>
-        <td style="font-size:11px">Tue Mar 10 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
-      </tr>
-      <tr class="">
-        <td><strong>18</strong></td>
-        <td class="mono"><strong>160.101.130.20</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td class="mono" style="font-size:11px">80/http</td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
-      </tr>
-      <tr class="">
-        <td><strong>19</strong></td>
-        <td class="mono"><strong>160.101.130.19</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td class="mono" style="font-size:11px">443/, 443/https</td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
-      </tr>
-      <tr class="">
-        <td><strong>20</strong></td>
-        <td class="mono"><strong>160.101.130.18</strong></td>
-        <td><span class="score-badge" style="background:#6b7280">50</span></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center"><strong style="color:inherit">0</strong></td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">0</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center">0.0</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td class="mono" style="font-size:11px">443/, 443/https</td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-        <td style="font-size:11px;max-width:200px">—</td>
+        <td><strong>COPS Bastion</strong><br><small>Cloud Resource</small></td>
+        <td>Unowned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
+        <td>
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          <span class="badge exposed">EXPOSED</span>
+          
+        </td>
+        <td>9.8</td>
+        <td><small>Wiz</small></td>
       </tr>
     </tbody>
   </table>
 
-  <!-- Top 10 CVEs -->
-  <h2>Top 10 Vulnerabilities by Priority Score</h2>
-  <div class="note">Highest-scoring CVEs across all sources. Score = CVSS + KEV (+100) + External ASM (+50).</div>
+  <h2>Top Critical Vulnerabilities</h2>
   <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>CVE ID</th>
-        <th>Vulnerability Name</th>
-        <th>IP Address</th>
-        <th>CVSS</th>
-        <th>KEV</th>
-        <th>In ASM</th>
-        <th>Source</th>
-        <th>Score</th>
-      </tr>
-    </thead>
+    <thead><tr><th>CVE ID</th><th>CVSS</th><th>KEV</th><th>Global Occurrence</th></tr></thead>
     <tbody>
       
-      <tr class="pri-critical">
-        <td><strong>1</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-43200</strong></td>
-        <td>Apple Multiple Products Unspecified Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2013-3900</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>2069 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>2</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-2441</strong></td>
-        <td>Google Chromium CSS Use-After-Free Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2026-2441</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>2000 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>3</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-15556</strong></td>
-        <td>Notepad++ Download of Code Without Integrity Check Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2026-3910</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>1917 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>4</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-31200</strong></td>
-        <td>Apple Multiple Products Memory Corruption Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2026-3909</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>1162 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>5</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-43300</strong></td>
-        <td>Apple iOS, iPadOS, and macOS Out-of-Bounds Write Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2025-15556</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>587 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>6</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-21509</strong></td>
-        <td>Microsoft Office Security Feature Bypass Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2026-21509</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>353 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>7</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2013-3900</strong></td>
-        <td>Microsoft WinVerifyTrust function Remote Code Execution</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2020-11023</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>173 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>8</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2024-44308</strong></td>
-        <td>Apple Multiple Products Code Execution Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2025-22224</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>163 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>9</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2025-24201</strong></td>
-        <td>Apple Multiple Products WebKit Out-of-Bounds Write Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2025-27363</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>140 assets</td>
       </tr>
-      <tr class="pri-critical">
-        <td><strong>10</strong></td>
-        <td class="mono" style="white-space:nowrap"><strong>CVE-2026-3909</strong></td>
-        <td>Google Skia Out-of-Bounds Write Vulnerability</td>
-        <td class="mono">192.168.1.100</td>
-        <td style="text-align:center">N/A</td>
-        <td style="text-align:center"><span style="background:#7c3aed;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600">KEV</span></td>
-        <td style="text-align:center">✓</td>
-        <td><span class="tag">Tenable</span></td>
-        <td><span class="score-badge" style="background:#dc2626">150</span></td>
+      <tr>
+        <td><strong>CVE-2025-43300</strong></td>
+        <td>null</td>
+        <td>✅ Yes</td>
+        <td>137 assets</td>
       </tr>
     </tbody>
   </table>
 
-  <!-- High-Risk Port Exposures -->
-  <h2>High-Risk Port Exposures (Active Last 30 Days)</h2>
-  <div class="warn">The following services are exposed on high-risk ports and were seen in ASM within the last 30 days. Ports like RDP (3389), SSH (22), and database ports should never be directly internet-facing.</div>
-  <table>
-    <thead>
-      <tr>
-        <th>IP Address</th>
-        <th>Hostname</th>
-        <th>Port</th>
-        <th>Service</th>
-        <th>Risk</th>
-        <th>ASM Severity</th>
-        <th>Last Seen</th>
-      </tr>
-    </thead>
-    <tbody>
-      
-      <tr>
-        <td class="mono">104.45.42.108</td>
-        <td style="font-size:11px">dsv-scg.scout.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.2p1 Ubuntu 4ubuntu0.13</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">108.160.142.110</td>
-        <td style="font-size:11px">c3o2.ns.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 9.2p1 Debian 2+deb12u7</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">116.202.71.90</td>
-        <td style="font-size:11px">cpbm.plan.io</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 7.9p1</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Thu Mar 12 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">121.241.189.97</td>
-        <td style="font-size:11px">121.241.189.97.static-pune.vsnl.net.in</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Cisco SSH 1.25</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">13.82.84.203</td>
-        <td style="font-size:11px">andreano-scg.scout.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.2p1 Ubuntu 4ubuntu0.13</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td style="font-size:11px">Sat Mar 07 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">13.91.19.60</td>
-        <td style="font-size:11px">marco-scg.scout.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.2p1 Ubuntu 4ubuntu0.13</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td style="font-size:11px">Thu Mar 05 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">154.12.188.26</td>
-        <td style="font-size:11px">c1o2.ns.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 9.6p1 Ubuntu 3ubuntu13.14</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">160.101.130.26</td>
-        <td style="font-size:11px">bytesupport.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Cerberus FTP Server sshd 2024</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">160.101.130.26</td>
-        <td style="font-size:11px">files-az.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Cerberus FTP Server sshd 2024</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">160.101.130.26</td>
-        <td style="font-size:11px">files.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Cerberus FTP Server sshd 2024</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">160.101.130.26</td>
-        <td style="font-size:11px">ftpsupport-az.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Cerberus FTP Server sshd 2024</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">160.101.130.26</td>
-        <td style="font-size:11px">ftpsupport.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Cerberus FTP Server sshd 2024</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">162.221.157.18</td>
-        <td style="font-size:11px">mft.tibco.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">ssh</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Wed Mar 18 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">174.129.239.54</td>
-        <td style="font-size:11px">sc-stag.tibco.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 6.6.1</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">178.156.132.205</td>
-        <td style="font-size:11px">www.cloudstack.org</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.9p1 Ubuntu 3ubuntu0.13</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">185.104.251.213</td>
-        <td style="font-size:11px">cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.4p1 Debian 5+deb11u5</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">20.125.18.233</td>
-        <td style="font-size:11px">eminenthaddock.try.sds.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Golang x/crypto/ssh server</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sun Mar 08 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">20.219.28.133</td>
-        <td style="font-size:11px">rarereptile.try.sds.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 9.6p1 Ubuntu 3ubuntu13.14</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">20.49.147.18</td>
-        <td style="font-size:11px">experian.sds.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Golang x/crypto/ssh server</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sun Mar 08 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">20.79.250.183</td>
-        <td style="font-size:11px">grandmutt.try.sds.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Golang x/crypto/ssh server</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Mon Mar 09 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">203.125.86.10</td>
-        <td style="font-size:11px">techsupportsg.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Cisco SSH 1.25</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">3.209.183.98</td>
-        <td style="font-size:11px">ibcloud-portal.ibi.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 9.6p1 Ubuntu 3ubuntu13.15</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">medium</span></td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">34.198.32.154</td>
-        <td style="font-size:11px">ibcloud-monitoring.ibi.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 9.2p1 Debian 2+deb12u7</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">34.76.138.164</td>
-        <td style="font-size:11px">demo.sds.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Golang x/crypto/ssh server</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">4.223.161.6</td>
-        <td style="font-size:11px">funnyhyena.try.sds.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">Golang x/crypto/ssh server</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">44.216.241.93</td>
-        <td style="font-size:11px">databaseservice-a.apps.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.7</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#dc2626;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">critical</span></td>
-        <td style="font-size:11px">Sat Mar 07 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">54.200.192.224</td>
-        <td style="font-size:11px">zabbix-clarity.cloud.tibco.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.4p1 Debian 5+deb11u5</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Mon Mar 09 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">54.235.222.154</td>
-        <td style="font-size:11px">www.cq.cont.aws.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 7.9p1 Debian 10+deb10u4</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td style="font-size:11px">Thu Mar 05 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">54.241.179.211</td>
-        <td style="font-size:11px">spotfire-enterprise-cloud-demo.tibco.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 9.6p1 Ubuntu 3ubuntu13.14</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">medium</span></td>
-        <td style="font-size:11px">Sun Mar 08 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">72.144.146.96</td>
-        <td style="font-size:11px">crelan-scg.scout.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.2p1 Ubuntu 4ubuntu0.13</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td style="font-size:11px">Mon Mar 16 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">74.235.168.28</td>
-        <td style="font-size:11px">cigna-scg.scout.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 8.2p1 Ubuntu 4ubuntu0.13</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#ea580c;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">high</span></td>
-        <td style="font-size:11px">Wed Mar 18 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">91.99.25.219</td>
-        <td style="font-size:11px">emissioncore.cloud.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 9.6p1 Ubuntu 3ubuntu13.13</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Wed Mar 04 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">93.93.135.149</td>
-        <td style="font-size:11px">xc.vmd.citrix.com</td>
-        <td class="mono"><strong>22</strong></td>
-        <td style="font-size:11px">OpenSSH 9.2p1 Debian 2+deb12u7</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">SSH</td>
-        <td><span style="background:#d97706;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">medium</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">108.177.125.26</td>
-        <td style="font-size:11px">alt2.aspmx.l.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sun Mar 08 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">108.177.125.26</td>
-        <td style="font-size:11px">alt2.aspmx.l.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Mon Mar 09 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">108.177.125.26</td>
-        <td style="font-size:11px">aspmx3.googlemail.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sun Mar 08 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">138.1.51.126</td>
-        <td style="font-size:11px">s197875.m.en25.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Microsoft ESMTP 10.0.14393.4169</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Thu Mar 05 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">138.1.51.126</td>
-        <td style="font-size:11px">s595390.m.en25.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Microsoft ESMTP 10.0.14393.4169</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sat Mar 07 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">138.1.51.126</td>
-        <td style="font-size:11px">s600731.m.en25.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Microsoft ESMTP 10.0.14393.4169</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Wed Mar 11 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">142.250.142.26</td>
-        <td style="font-size:11px">aspmx.l.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">142.250.142.26</td>
-        <td style="font-size:11px">smtp.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sat Mar 07 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">142.251.2.27</td>
-        <td style="font-size:11px">aspmx.l.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">158.247.25.192</td>
-        <td style="font-size:11px">bid4732.47928137m.discover.jaspersoft.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">smtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sun Mar 15 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">158.247.25.192</td>
-        <td style="font-size:11px">discover.jaspersoft.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">smtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Tue Mar 17 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">172.217.78.26</td>
-        <td style="font-size:11px">smtp.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sat Mar 07 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">172.253.135.26</td>
-        <td style="font-size:11px">aspmx3.googlemail.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sat Mar 07 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">172.253.135.26</td>
-        <td style="font-size:11px">aspmx3.googlemail.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sat Mar 07 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">172.253.135.27</td>
-        <td style="font-size:11px">alt2.aspmx.l.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Mon Mar 09 2026 00:00:00 GMT-0700 (Pacific Daylight Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">172.253.135.27</td>
-        <td style="font-size:11px">alt3.aspmx.l.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#6b7280;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">none</span></td>
-        <td style="font-size:11px">Sun Mar 08 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-      <tr>
-        <td class="mono">172.253.144.26</td>
-        <td style="font-size:11px">alt1.aspmx.l.google.com</td>
-        <td class="mono"><strong>25</strong></td>
-        <td style="font-size:11px">Google gsmtp</td>
-        <td style="font-size:11px;color:#dc2626;font-weight:600">Port 25</td>
-        <td><span style="background:#65a30d;color:white;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase">low</span></td>
-        <td style="font-size:11px">Sat Mar 07 2026 00:00:00 GMT-0800 (Pacific Standard Time)</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Footer -->
   <div class="footer">
-    Security Prioritization Report &bull; Generated 3/23/2026, 12:55:55 PM &bull; vuln_db &bull; Tenable + ASM + Wiz + CISA KEV
+    Priority Score = CVSS + KEV(+100) + Public(+100) + SensitiveData(+100) + CriticalBU(+30) + CrossTool(+20)
   </div>
-
 </div>
 </body>
 </html>

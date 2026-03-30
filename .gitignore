@@ -1,2 +1,5 @@
 .env
 *.csv
+remediation_alert_ubuntu*
+*.log
+unowned*
