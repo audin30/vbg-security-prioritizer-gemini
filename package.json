@@ -9,6 +9,7 @@
     "axios": "^1.7.0",
     "google-auth-library": "^9.0.0",
     "googleapis": "^144.0.0",
+    "nodemailer": "^8.0.4",
     "pg": "^8.13.0"
   }
 }
