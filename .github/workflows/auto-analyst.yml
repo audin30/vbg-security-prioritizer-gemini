@@ -1,0 +1,53 @@
+name: Gemini Security Auto-Analyst
+
+on:
+  schedule:
+    # Run twice a day at 08:00 and 20:00 UTC
+    - cron: '0 8,20 * * *'
+  workflow_dispatch: # Allow manual triggering for testing
+
+jobs:
+  analyze-and-alert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Auto-Analyst Pulse
+        env:
+          # Database Configuration
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+
+          # SMTP Configuration
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+
+          # Google Chat Configuration
+          GOOGLE_CHAT_WEBHOOK: ${{ secrets.GOOGLE_CHAT_WEBHOOK }}
+
+          # Security API Keys (for Skills)
+          WIZ_CLIENT_ID: ${{ secrets.WIZ_CLIENT_ID }}
+          WIZ_CLIENT_SECRET: ${{ secrets.WIZ_CLIENT_SECRET }}
+          TENABLE_ACCESS_KEY: ${{ secrets.TENABLE_ACCESS_KEY }}
+          TENABLE_SECRET_KEY: ${{ secrets.TENABLE_SECRET_KEY }}
+          VIRUSTOTAL_API_KEY: ${{ secrets.VIRUSTOTAL_API_KEY }}
+          GREYNOISE_API_KEY: ${{ secrets.GREYNOISE_API_KEY }}
+          OTX_API_KEY: ${{ secrets.OTX_API_KEY }}
+
+        run: node scripts/auto_analyst.cjs
