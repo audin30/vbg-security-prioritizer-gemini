@@ -49,26 +49,24 @@ Reload the Gemini CLI to activate the newly installed skills:
 /skills reload
 ```
 
-### 5. Generate Your First Report
-Run the prioritization script to correlate your data and generate a `security_report.html`:
+### 5. Start the Security Dashboard
+Launch the interactive web-based chat interface:
 ```bash
-node scripts/generate_report.cjs
+npm start
 ```
+*Access the UI at: **http://localhost:3001***
 
 ---
 
-## 🛠️ Featured Skills
+## 🛠️ Featured Skills & Tools
 
-| Skill Name | Purpose | Key Data Sources |
+| Component | Purpose | Key Data Sources |
 | :--- | :--- | :--- |
-| **`security-prioritizer`** | Correlates & ranks vulnerabilities based on risk. | Tenable, Wiz, CISA KEV, phpIPAM |
+| **`Security Chat UI`** | Interactive web dashboard for SOC analysts. | React / Node.js API |
+| **`security-prioritizer`** | Correlates & ranks vulnerabilities based on risk. | Tenable, Wiz, CISA KEV |
+| **`auto-analyst`** | Fully autonomous daily risk analysis & alerting. | GitHub Actions / Cron |
 | **`vulnerability-validator`** | Validates vulnerabilities via active scans. | Nuclei, Nmap |
 | **`ti-master-enricher`** | Orchestrates multi-source TI lookups (Consensus). | GreyNoise, OTX, VirusTotal |
-| **`virustotal-checker`** | Threat reputation for IPs and Domains. | VirusTotal API v3 |
-| **`greynoise-community`** | Identifies internet background noise/scanners. | GreyNoise Community API |
-| **`alienvault-otx`** | Checks indicators against threat pulses. | AlienVault OTX API |
-| **`chronicle-query`** | Queries SIEM events and detections. | Google Chronicle API |
-| **`talos-intelligence`** | Reputation lookups from Cisco Talos. | Talos Intelligence |
 | **`asset-email-reporter`** | Sends automated remediation alerts via SMTP. | Node.js / Nodemailer |
 
 ## 📖 Documentation

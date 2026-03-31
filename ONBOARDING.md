@@ -16,9 +16,25 @@ Gemini CLI works best when you use natural language triggers defined in the `.sk
 | **Remediation** | "Email a critical remediation alert for [hostname] to [email@example.com]." |
 | **Validation** | "Run a validation scan on [IP_ADDRESS] to see if it is actually exploitable." |
 
+## 💬 2. The Security Chat UI (Dashboard)
+
+If you prefer a web-based interface over the CLI, you can launch the **Gemini Security Chat UI**. This provides a conversational SOC dashboard.
+
+### Starting the UI
+1. Run the start command:
+   ```bash
+   npm start
+   ```
+2. Open your browser to: **http://localhost:3001**
+
+### Why use the Chat UI?
+* **Live Analysis**: Ask questions and get formatted markdown responses with tables.
+* **Integrated Reporting**: View the full HTML security report directly through the UI links.
+* **One-Click Skills**: Trigger complex analysis (like TI enrichment or Priority reports) without knowing specific CLI flags.
+
 ---
 
-## ⚙️ 2. Connecting Your Data (MCP Configuration)
+## ⚙️ 3. Connecting Your Data (MCP Configuration)
 
 The `security-prioritizer` and `compliance-checker` skills require a connection to your PostgreSQL database (`vuln_db`).
 

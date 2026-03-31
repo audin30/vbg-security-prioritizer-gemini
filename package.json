@@ -2,11 +2,18 @@
   "name": "gem-securityprioritization",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "start": "node server/index.cjs"
+  },
   "engines": {
     "node": ">=18.0.0"
   },
   "dependencies": {
     "axios": "^1.7.0",
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-sse": "^1.0.0",
     "google-auth-library": "^9.0.0",
     "googleapis": "^144.0.0",
     "nodemailer": "^8.0.4",
