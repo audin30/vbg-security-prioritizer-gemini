@@ -2,426 +2,407 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Security Prioritization Report — 3/28/2026, 11:10:19 PM</title>
+  <title>Dynamic Security Report — 3/30/2026, 6:05:06 PM</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f1f5f9; color: #334155; margin: 0; padding: 20px; }
-    .container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-    h1 { color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-bottom: 30px; }
-    .stat-card { background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; }
-    .stat-val { font-size: 24px; font-weight: bold; color: #2563eb; }
-    .stat-label { font-size: 12px; color: #64748b; text-transform: uppercase; margin-top: 5px; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #f1f5f9; color: #334155; margin: 0; padding: 20px; }
+    .container { max-width: 1300px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+    h1 { color: #0f172a; margin: 0; }
+    .model-badge { background: #1e293b; color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; vertical-align: middle; margin-left: 10px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin: 25px 0; }
+    .stat-card { background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+    .stat-val { font-size: 22px; font-weight: bold; color: #2563eb; }
+    .stat-label { font-size: 11px; color: #64748b; text-transform: uppercase; }
     table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th { text-align: left; background: #f8fafc; padding: 12px; border-bottom: 2px solid #e2e8f0; font-size: 12px; }
+    th { text-align: left; background: #f8fafc; padding: 12px; border-bottom: 2px solid #e2e8f0; font-size: 11px; color: #64748b; }
     td { padding: 12px; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
-    .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; color: white; }
-    .exposed { background: #ef4444; }
-    .internal { background: #10b981; }
-    .score-pill { padding: 4px 12px; border-radius: 20px; color: white; font-weight: bold; }
-    .toxic { border: 2px solid #ef4444; background: #fee2e2; }
-    .footer { margin-top: 40px; font-size: 11px; color: #94a3b8; text-align: center; }
+    .badge { padding: 3px 6px; border-radius: 4px; font-size: 10px; font-weight: bold; color: white; margin-right: 4px; }
+    .score-pill { padding: 4px 10px; border-radius: 6px; color: white; font-weight: bold; font-family: monospace; }
+    .toxic { background: #fff1f2; border-left: 4px solid #ef4444; }
+    .footer { margin-top: 40px; font-size: 11px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 20px; }
   </style>
 </head>
 <body>
 <div class="container">
-  <h1>Security Prioritization Report</h1>
-  <p><strong>Generated:</strong> 3/28/2026, 11:10:19 PM | <strong>Model:</strong> Toxic Combination v2</p>
+  <h1>Security Prioritization <span class="model-badge">DYNAMIC RISK MODEL V3</span></h1>
+  <p style="color:#64748b; font-size: 12px;">Generated: 3/30/2026, 6:05:06 PM | Incorporating Tenable VPR/ACR + Wiz Exposure + Malware Intel</p>
 
   <div class="stats">
-    <div class="stat-card"><div class="stat-val">45472</div><div class="stat-label">Active Assets</div></div>
-    <div class="stat-card"><div class="stat-val">1553</div><div class="stat-label">CISA KEV</div></div>
-    <div class="stat-card"><div class="stat-val">3508</div><div class="stat-label">Public (ASM)</div></div>
-    <div class="stat-card"><div class="stat-val">33100</div><div class="stat-label">Public (Cloud)</div></div>
-    <div class="stat-card"><div class="stat-val">23174</div><div class="stat-label">Enriched Assets</div></div>
+    <div class="stat-card"><div class="stat-val">45895</div><div class="stat-label">Active Assets</div></div>
+    <div class="stat-card"><div class="stat-val" style="color:#dc2626">0</div><div class="stat-label">Malware Exploitable</div></div>
+    <div class="stat-card"><div class="stat-val">1555</div><div class="stat-label">CISA KEV</div></div>
+    <div class="stat-card"><div class="stat-val">33803</div><div class="stat-label">Public (Cloud)</div></div>
+    <div class="stat-card"><div class="stat-val">23174</div><div class="stat-label">Business Enriched</div></div>
   </div>
 
-  <h2>Top 25 Critical Assets</h2>
+  <h2>🏆 Top Remediation Targets</h2>
   <table>
     <thead>
       <tr>
         <th>Asset / IP</th>
         <th>Owner / BU</th>
         <th>Score</th>
-        <th>Risk Factors</th>
-        <th>Max CVSS</th>
+        <th>Risk Modifiers</th>
+        <th>Max Threat / ACR</th>
         <th>Sources</th>
       </tr>
     </thead>
     <tbody>
       
       <tr class="toxic">
-        <td><strong>Wordpress-Demo web server</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#991b1b">309.8</span></td>
+        <td><strong>TDV-PostgresNonSSL</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#991b1b">314</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          <span class="badge" style="background:#db2777">PII</span>
         </td>
-        <td>9.8</td>
+        <td><strong>9.8</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="toxic">
-        <td><strong>TDV-PostgresNonSSL</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#991b1b">309.8</span></td>
+        <td><strong>Wordpress-Demo web server</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#991b1b">314</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          <span class="badge" style="background:#db2777">PII</span>
         </td>
-        <td>9.8</td>
+        <td><strong>9.8</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="toxic">
-        <td><strong>ctxdevassist</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>levsieast2</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
           
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+          
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          <span class="badge" style="background:#db2777">PII</span>
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="toxic">
-        <td><strong>usw01cavtco01</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>Jeff Levetin - TRAININGDB.TIBCO.COM - DO NOT USE/DELETE</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
           
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+          
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          <span class="badge" style="background:#db2777">PII</span>
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>guedjasgaz01</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          
+          <span class="badge" style="background:#db2777">PII</span>
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>jx-de13-sd36</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>FL_TFT401_USER09</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>FL_TFT401_USER05</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>FL_TFT401_USER11</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>SH_BW611_user09</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>FL_TFT401_USER03</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="toxic">
-        <td><strong>AZ-VSI02</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>ctxdevassist</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
           
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+          
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          <span class="badge" style="background:#db2777">PII</span>
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>jx-de13-sd36</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>FL_TFT401_USER02</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
           
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>guedjasgaz01</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>guedjasjrw01</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge internal">INTERNAL</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+          
+          
+          <span class="badge" style="background:#db2777">PII</span>
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>SH_BW611_user09</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>FL_TFT401_USER04</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
           
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>markpcf1</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>FL_TFT401_USER06</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
           
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>FL_TFT401_USER07</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>FL_TFT401_USER08</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>FL_TFT401_USER10</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>FL_TFT401_USER12</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
+        <td><small>Wiz</small></td>
+      </tr>
+      <tr class="">
+        <td><strong>SH_BW611_user00</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
+        <td>
+          
+          <span class="badge" style="background:#7c3aed">KEV</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          
+        </td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="toxic">
-        <td><strong>usw00mgvgit01</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>AZ-VSI02</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
           
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
-        </td>
-        <td>10</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="toxic">
-        <td><strong>Jeff Levetin - TRAININGDB.TIBCO.COM - DO NOT USE/DELETE</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
-        <td>
           
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
+          <span class="badge" style="background:#db2777">PII</span>
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>(DO NOT DELETE)sbamzai-Tenable OVA instance</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>(DO NOT DELETE)sbamzai-Tenable OVA instance</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
           
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>shu-de12-122</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>FL_TFT401_USER01</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
           
         </td>
-        <td>10</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="toxic">
-        <td><strong>levsieast2</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
-        <td>
-          
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
-        </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
       </tr>
       <tr class="">
-        <td><strong>SH_BW611_user00</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
+        <td><strong>markpcf1</strong><br><small style="color:#64748b">Cloud Resource</small></td>
+        <td>Unassigned<br><small>N/A</small></td>
+        <td><span class="score-pill" style="background:#dc2626">214</span></td>
         <td>
+          
           <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
+          
+          <span class="badge" style="background:#ea580c">PUBLIC</span>
           
         </td>
-        <td>10</td>
+        <td><strong>10</strong> / <span style="color:#2563eb">ACR 7</span></td>
         <td><small>Wiz</small></td>
-      </tr>
-      <tr class="">
-        <td><strong>guedjasjrw01</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
-        <td>
-          <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge internal">INTERNAL</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
-        </td>
-        <td>10</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="toxic">
-        <td><strong>usw90cavtco01</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">210</span></td>
-        <td>
-          
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
-        </td>
-        <td>10</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="toxic">
-        <td><strong>Danni_Spotfire</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
-        <td>
-          
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
-        </td>
-        <td>9.8</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="">
-        <td><strong>Dev C-level-blog</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
-        <td>
-          <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
-          
-        </td>
-        <td>9.8</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="toxic">
-        <td><strong>JRS-9.0.0-hf</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
-        <td>
-          
-          <span class="badge exposed">EXPOSED</span>
-          <span class="badge" style="background:#db2777">SENSITIVE DATA</span>
-        </td>
-        <td>9.8</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="">
-        <td><strong>CloudOpsPortal02</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
-        <td>
-          <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
-          
-        </td>
-        <td>9.8</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="">
-        <td><strong>CloudEngine01</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
-        <td>
-          <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
-          
-        </td>
-        <td>9.8</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="">
-        <td><strong>CloudOpsPortal01</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
-        <td>
-          <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
-          
-        </td>
-        <td>9.8</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="">
-        <td><strong>JapanWest-MonitoringVM</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
-        <td>
-          <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
-          
-        </td>
-        <td>9.8</td>
-        <td><small>Wiz</small></td>
-      </tr>
-      <tr class="">
-        <td><strong>COPS Bastion</strong><br><small>Cloud Resource</small></td>
-        <td>Unowned<br><small>N/A</small></td>
-        <td><span class="score-pill" style="background:#dc2626">209.8</span></td>
-        <td>
-          <span class="badge" style="background:#7c3aed">KEV</span>
-          <span class="badge exposed">EXPOSED</span>
-          
-        </td>
-        <td>9.8</td>
-        <td><small>Wiz</small></td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h2>Top Critical Vulnerabilities</h2>
-  <table>
-    <thead><tr><th>CVE ID</th><th>CVSS</th><th>KEV</th><th>Global Occurrence</th></tr></thead>
-    <tbody>
-      
-      <tr>
-        <td><strong>CVE-2013-3900</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>2069 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2026-2441</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>2000 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2026-3910</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>1917 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2026-3909</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>1162 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2025-15556</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>587 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2026-21509</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>353 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2020-11023</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>173 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2025-22224</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>163 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2025-27363</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>140 assets</td>
-      </tr>
-      <tr>
-        <td><strong>CVE-2025-43300</strong></td>
-        <td>null</td>
-        <td>✅ Yes</td>
-        <td>137 assets</td>
       </tr>
     </tbody>
   </table>
 
   <div class="footer">
-    Priority Score = CVSS + KEV(+100) + Public(+100) + SensitiveData(+100) + CriticalBU(+30) + CrossTool(+20)
+    <strong>Scoring Model:</strong> (Max(CVSS, VPR) * (ACR/5)) + KEV(100) + Malware(150) + Exploit(50) + Public(100) + SensitiveData(100) + BU_Factor(30)
   </div>
 </div>
 </body>
