@@ -12,75 +12,58 @@ The workspace is organized into discrete skill directories, each containing its 
 
 ### Core Skills & Their Functions
 
-| Skill Name | Purpose | Key Data Sources |
-| :--- | :--- | :--- |
-| **`security-prioritizer`** | Correlates & ranks vulnerabilities based on risk. | Tenable, Wiz, CISA KEV, phpIPAM |
-| **`ti-master-enricher`** | Orchestrates multi-source TI lookups (Consensus). | GreyNoise, OTX, VirusTotal |
-| **`virustotal-checker`** | Threat reputation for IPs and Domains. | VirusTotal API v3 |
-| **`greynoise-community`** | Identifies internet background noise/scanners. | GreyNoise Community API |
-| **`alienvault-otx`** | Checks indicators against threat pulses. | AlienVault OTX API |
-| **`chronicle-query`** | Queries SIEM events and detections. | Google Chronicle API |
-| **`talos-intelligence`** | Reputation lookups from Cisco Talos. | Talos Intelligence |
-| **`vulnerability-validator`** | Validates vulnerabilities via active scans. | Nuclei, Nmap |
-| **`csv-writer`** | Exports JSON data to CSV files. | Local Node.js Script |
+| Component | Type | Purpose | Key Data Sources |
+| :--- | :--- | :--- | :--- |
+| **`Security Chat UI`** | Front-End | Interactive web-based SOC dashboard. | React / Node.js API |
+| **`security-prioritizer`** | Skill/SQL | Correlates & ranks vulnerabilities (V3 Model). | Tenable, Wiz, CISA KEV |
+| **`auto-analyst`** | Orchestrator | Autonomous daily risk analysis & alerting. | GitHub Actions / Cron |
+| **`vulnerability-validator`** | Skill/Scan | Validates vulnerabilities via active scans. | Nuclei, Nmap |
+| **`ti-master-enricher`** | Skill/Orch | Multi-source TI consensus lookup. | GreyNoise, OTX, VT |
 
 ---
 
-## 🛠️ Development Workflow
+## 🛠️ Development & Operations
 
-### 1. Adding/Updating a Skill
-1.  Modify the logic in the skill's source directory (e.g., `virustotal-checker/scripts/vt_lookup.cjs`).
-2.  Update the `SKILL.md` file in that directory to reflect changes in behavior or triggers.
-3.  **Repackage**: Update the root-level `.skill` zip file by zipping the directory contents (ensure `SKILL.md` is at the root of the zip).
-4.  **Mirror**: If testing locally in this workspace, ensure the changes are reflected in `.gemini/skills/<skill-name>/`.
+### 1. Autonomous Pipeline (`auto-analyst`)
+The system is designed to run autonomously via GitHub Actions (`.github/workflows/auto-analyst.yml`) or Cron.
+- **Schedule**: Twice daily (08:00 and 20:00 UTC).
+- **Logic**: Executes Dynamic Risk V3, deduplicates findings via `public.notification_state`, and dispatches Email/Chat alerts.
+- **Triggers**: `node scripts/auto_analyst.cjs`.
 
-### 2. Installing a Skill
-To install a skill globally or at the user level:
-```bash
-gemini skills install ./<skill-name>.skill --scope user
-```
-
-### 3. Activating Changes
-After installing or modifying a skill, reload the engine:
-```bash
-/skills reload
-```
+### 2. Interactive Dashboard (`Security Chat UI`)
+A web-based conversational interface for analysts.
+- **Launch**: `npm start` (Runs on port 3001).
+- **Features**: Intent mapping to security scripts, rich markdown rendering, and direct report links.
 
 ---
 
-## 🔍 Security Analysis Workflows
+## 🔍 Security Analysis Logic (V3 Model)
 
-Before performing any workflow, you can refer to the corresponding file in `workflows/`:
+The prioritization logic in `scripts/generate_report.cjs` and `scripts/auto_analyst.cjs` uses a **Dynamic Risk Model**:
 
-- **Prioritize findings / risk report** → read `workflows/security-prioritizer.md`, then run SQL via PostgreSQL MCP.
-- **Enrich an IP/domain/hash** → read `workflows/ti-enrichment.md`, then run the appropriate script(s).
-- **Check Chronicle SIEM** → read `workflows/chronicle.md`, then run the script.
-- **Export to CSV** → read `workflows/csv-export.md`, then run the csv-writer script.
+### Scoring Weights
+- **Base Score**: `GREATEST(CVSS, VPR)` (0–10).
+- **Asset Criticality (ACR)**: Scales base score by `(ACR / 5.0)`.
+- **Malware Exploitable**: **+150 points** (Known malware association).
+- **CISA KEV Match**: **+100 points** (Known exploited vulnerability).
+- **Public Exposure**: **+100 points** (Internet reachable via Wiz/ASM).
+- **Sensitive Data (PII)**: **+100 points** (Wiz Data Security finding).
+- **Exploit Available**: **+50 points** (Functional exploit code exists).
+- **Critical BU**: **+30 points** (e.g., Citrix, Netscaler).
 
-### Prioritization Scoring Model (`security-prioritizer`)
-
-The SQL in `security-prioritizer/references/logic.md` is the ground truth. Scores:
-- Base CVSS: 0–10
-- CISA KEV: +100
-- External (ASM): +50
-- VirusTotal malicious (≥5 vendors, via `public.vt_results`): +50
-- Management/OOB subnet (phpIPAM): +30
-- Gateway device (phpIPAM): +20
-- Cross-tool confirmation (both Tenable AND Wiz): +20
-
-### Required PostgreSQL Tables
-
-`tenable_findings`, `tenable_assets`, `tenable_asm_assets`, `wiz_vulnerabilities`, `wiz_inventory`, `cisa_kev`, `phpipam_assets`, `vt_results` (columns: `target`, `malicious`)
+### Toxic Combination Detection
+Assets meeting the following criteria are flagged as **Critical (Score > 300)**:
+`Internet Exposed` + `Sensitive Data Found` + `High Threat Vulnerability (KEV/Malware)`
 
 ---
 
 ## 🔑 Prerequisites & Configuration
 
-Most skills in this workspace require API keys or specific environment variables:
+- **Environment**: `.env` requires DB, SMTP, and Security API keys.
+- **Database**: `vuln_db` (PostgreSQL) with `public.notification_state` for alert tracking.
+- **Messaging**: `GOOGLE_CHAT_WEBHOOK` for real-time security channel alerts.
+- **Runtime**: Node.js (v18+) and Python (3.9+).
 
-- **Security APIs**: `VIRUSTOTAL_API_KEY`, `GREYNOISE_API_KEY`, `OTX_API_KEY`.
-- **Infrastructure**: The `security-prioritizer` skill requires a connection to a **PostgreSQL MCP Server** (`vuln_db`).
-- **Runtime**: All script-based skills run on **Node.js**. Ensure `node` is available in your path and run `npm install` in the root.
 
 ## 📝 Conventions
 
