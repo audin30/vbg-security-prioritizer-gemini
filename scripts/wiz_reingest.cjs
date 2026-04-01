@@ -14,6 +14,7 @@
  *   node scripts/wiz_reingest.cjs --dry-run   (fetch only, no DB writes)
  */
 
+require('dotenv').config();
 const axios = require('axios');
 const { Pool } = require('pg');
 

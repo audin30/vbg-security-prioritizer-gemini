@@ -30,9 +30,10 @@ The system is designed to run autonomously via GitHub Actions (`.github/workflow
 - **Logic**: Executes Dynamic Risk V3, deduplicates findings via `public.notification_state`, and dispatches Email/Chat alerts.
 - **Triggers**: `node scripts/auto_analyst.cjs`.
 
-### 2. Interactive Dashboard (`Security Chat UI`)
+### 2. Interactive Dashboard (`VBG Security Chat UI`)
 A web-based conversational interface for analysts.
 - **Launch**: `npm start` (Runs on port 3001).
+- **Engine**: Powered by **Gemini 2.5 Flash Lite**.
 - **Features**: Intent mapping to security scripts, rich markdown rendering, and direct report links.
 
 ---

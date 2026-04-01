@@ -1,12 +1,21 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { Client } = require('pg');
-const { exec } = require('child_process');
+const { execSync } = require('child_process');
 const path = require('path');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express();
 const port = process.env.PORT || 3001;
+
+// Initialize Gemini API
+if (!process.env.GEMINI_API_KEY) {
+  console.warn("⚠️  WARNING: GEMINI_API_KEY not found in environment variables.");
+}
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "dummy_key");
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -20,74 +29,83 @@ const DB_CONFIG = {
   password: process.env.DB_PASS || process.env.DB_PASSWORD,
 };
 
-// Intent Mapping (Golden Prompts)
-const SKILL_MAP = [
-  { trigger: /top 10|prioritize|risk report/i, script: 'scripts/generate_report.cjs', description: 'Generating Priority Report...' },
-  { trigger: /enrich|reputation|check ip/i, script: 'scripts/ti_proxy.cjs', description: 'Enriching Indicator...' },
-  { trigger: /auto analyst|pulse/i, script: 'scripts/auto_analyst.cjs', description: 'Running Autonomous Analysis...' },
-];
+// System prompt to give Gemini context about the environment
+const SYSTEM_PROMPT = `
+You are the VBG Security Analyst, an expert AI agent for vulnerability management.
+You have access to a PostgreSQL database (vuln_db) with Tenable, Wiz, and CISA KEV data.
+
+CRITICAL INSTRUCTION: Only execute tools if the user explicitly asks for an action (e.g. "generate a report", "run a pulse", "enrich this IP"). 
+For general questions or analysis of existing data, do NOT trigger a tool.
+
+To trigger a tool, you MUST include the exact string in your response:
+1. "[ACTION: RUN_PRIORITIZER]" - To update the security report.
+2. "[ACTION: RUN_ENRICHER <ip>]" - To check threat intelligence for an IP.
+3. "[ACTION: RUN_PULSE]" - To run the autonomous auto-analyst check.
+
+If you are not running a tool, simply answer the user's question in Markdown.
+`;
 
 app.post('/api/chat', async (req, res) => {
-  const { message } = req.body;
-  console.log(`User: ${message}`);
-
-  let handled = false;
-
-  for (const skill of SKILL_MAP) {
-    if (skill.trigger.test(message)) {
-      handled = true;
-      
-      let command = `node ${path.join(__dirname, '..', skill.script)}`;
-      
-      // Special handling for TI Enrichment to extract indicator
-      if (skill.script.includes('ti_proxy')) {
-        const ipMatch = message.match(/\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/);
-        if (ipMatch) {
-          command += ` ${ipMatch[0]}`;
-        } else {
-          return res.json({ role: 'assistant', content: "I'd be happy to enrich that for you. Could you please provide the IP address, Domain, or Hash you'd like me to check?" });
-        }
-      }
-
-      exec(command, { env: process.env }, (error, stdout, stderr) => {
-        if (error) {
-          return res.json({ role: 'assistant', content: `Error executing analysis: ${error.message}` });
-        }
-        
-        if (skill.script.includes('generate_report')) {
-          res.json({ role: 'assistant', content: `Analysis complete. I have updated the security report. You can view it [here](http://localhost:3001/report).` });
-        } else {
-          try {
-            // Attempt to parse JSON output for a cleaner chat response
-            const json = JSON.parse(stdout);
-            let content = `### Analysis for ${json.indicator || 'Target'}\n`;
-            content += `**Confidence Score:** ${json.confidence_score || 'N/A'}\n\n`;
-            if (json.consensus_findings) {
-              json.consensus_findings.forEach(f => content += `- ${f}\n`);
-            }
-            res.json({ role: 'assistant', content: content || stdout });
-          } catch (e) {
-            res.json({ role: 'assistant', content: stdout || stderr });
-          }
-        }
-      });
-      break;
-    }
+  const { message, history = [] } = req.body;
+  
+  if (!process.env.GEMINI_API_KEY) {
+    return res.json({ role: 'assistant', content: "⚠️ Gemini API Key is missing. Please add `GEMINI_API_KEY` to your .env file." });
   }
 
-  if (!handled) {
-    res.json({ 
-      role: 'assistant', 
-      content: `I'm your VBG Security Analyst. I can help you prioritize vulnerabilities, enrich IPs, or run autonomous pulses. Try asking: "What are my top 10 risks?"` 
+  try {
+    const chat = model.startChat({
+      history: history.map(m => ({ role: m.role === 'user' ? 'user' : 'model', parts: [{ text: m.content }] })),
+      generationConfig: { maxOutputTokens: 2000 },
     });
+
+    const result = await chat.sendMessage([
+      { text: SYSTEM_PROMPT },
+      { text: message }
+    ]);
+    
+    let responseText = result.response.text();
+    let finalContent = responseText;
+
+    // 1. RUN_PRIORITIZER
+    if (responseText.includes("[ACTION: RUN_PRIORITIZER]")) {
+      console.log("Triggering Prioritizer via Gemini...");
+      const scriptPath = path.join(__dirname, '..', 'scripts/generate_report.cjs');
+      execSync(`node ${scriptPath}`, { env: process.env });
+      finalContent = responseText.replace("[ACTION: RUN_PRIORITIZER]", "") + 
+        "\n\n✅ **Priority analysis complete.** You can view the live report [here](http://localhost:3001/report).";
+    }
+
+    // 2. RUN_ENRICHER
+    const enrichMatch = responseText.match(/\[ACTION: RUN_ENRICHER\s+(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\]/);
+    if (enrichMatch) {
+      const ip = enrichMatch[1];
+      console.log(`Triggering TI Enrichment for ${ip} via Gemini...`);
+      const scriptPath = path.join(__dirname, '..', 'scripts/ti_proxy.cjs');
+      const output = execSync(`node ${scriptPath} ${ip}`, { env: process.env, encoding: 'utf8' });
+      finalContent = responseText.replace(/\[ACTION: RUN_ENRICHER\s+\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\]/, "") + "\n\n" + output;
+    }
+
+    // 3. RUN_PULSE
+    if (responseText.includes("[ACTION: RUN_PULSE]")) {
+      console.log("Triggering Auto-Analyst Pulse via Gemini...");
+      const scriptPath = path.join(__dirname, '..', 'scripts/auto_analyst.cjs');
+      const output = execSync(`node ${scriptPath}`, { env: process.env, encoding: 'utf8' });
+      finalContent = responseText.replace("[ACTION: RUN_PULSE]", "") + 
+        "\n\n✅ **Autonomous pulse complete.** Alerts have been dispatched if critical risks were found.\n\n" + output;
+    }
+
+    res.json({ role: 'assistant', content: finalContent.trim() });
+
+  } catch (error) {
+    console.error("Gemini API Error:", error.message);
+    res.json({ role: 'assistant', content: `Error from Gemini AI: ${error.message}` });
   }
 });
 
-// Serve the static report
 app.get('/report', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'security_report.html'));
 });
 
 app.listen(port, () => {
-  console.log(`Backend API running at http://localhost:${port}`);
+  console.log(`VBG Security Engine (AI-Powered) running at http://localhost:${port}`);
 });

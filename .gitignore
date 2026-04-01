@@ -4,3 +4,4 @@ remediation_alert_ubuntu*
 *.log
 unowned*
 *.html
+*.pdf

@@ -1,6 +1,6 @@
 # 🤖 Security Prioritizer & TI Skills Workspace
 
-> Built with VBG CLI
+> Coded by Gemini CLI
 
 This project is a centralized repository for specialized security operations skills focused on threat intelligence and vulnerability prioritization. These skills empower **VBG CLI** to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
 
@@ -89,4 +89,4 @@ The **VBG Security Chat UI** provides a modern, conversational command center fo
 
 ---
 
-🤖 Generated with VBG CLI
+🤖 Coded by Gemini CLI
