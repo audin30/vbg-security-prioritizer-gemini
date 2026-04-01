@@ -1,6 +1,6 @@
-# 🤖 Gemini CLI: Security Prioritizer & TI Skills Workspace
+# 🤖 VBG CLI: Security Prioritizer & TI Skills Workspace
 
-This project is a centralized repository for specialized **Gemini CLI Skills** focused on security operations, threat intelligence, and vulnerability prioritization. These skills empower the Gemini CLI to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
+This project is a centralized repository for specialized **VBG CLI Skills** focused on security operations, threat intelligence, and vulnerability prioritization. These skills empower the VBG CLI to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
 
 ## 📁 Project Architecture
 
@@ -8,7 +8,7 @@ The workspace is organized into discrete skill directories, each containing its 
 
 - **Root Skill Directories**: Source directories for each skill (e.g., `security-prioritizer/`, `virustotal-checker/`).
 - **`.skill` Files**: Compressed zip archives of the skill directories, used for installation via `gemini skills install`.
-- **`.gemini/skills/`**: The local "active" directory where skills are mirrored and loaded by the Gemini CLI within this workspace.
+- **`.gemini/skills/`**: The local "active" directory where skills are mirrored and loaded by the VBG CLI within this workspace.
 
 ### Core Skills & Their Functions
 

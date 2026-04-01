@@ -1,5 +1,5 @@
 /**
- * TI Proxy Script for Gemini Security Chat
+ * TI Proxy Script for VBG Security Chat
  * This script runs the enrich_master.cjs or individual TI scripts.
  */
 'use strict';

@@ -1,4 +1,4 @@
-# 🚀 Onboarding Guide: Getting Started with Gemini Security Analyst
+# 🚀 Onboarding Guide: Getting Started with VBG Security Analyst
 
 Welcome! This guide will help you move from initial installation to your first automated security insights in under 10 minutes.
 
@@ -6,9 +6,9 @@ Welcome! This guide will help you move from initial installation to your first a
 
 ## 🎯 1. The "Golden Prompts" (Cheat Sheet)
 
-Gemini CLI works best when you use natural language triggers defined in the `.skill` files. Try these "Golden Prompts" once your skills are installed:
+VBG CLI works best when you use natural language triggers defined in the `.skill` files. Try these "Golden Prompts" once your skills are installed:
 
-| Goal | Ask Gemini... |
+| Goal | Ask VBG... |
 | :--- | :--- |
 | **Risk Prioritization** | "Generate a risk-prioritized report of our top 10 assets." |
 | **Threat Intelligence** | "Give me a full TI enrichment report for IP [IP_ADDRESS]." |
@@ -18,7 +18,7 @@ Gemini CLI works best when you use natural language triggers defined in the `.sk
 
 ## 💬 2. The Security Chat UI (Dashboard)
 
-If you prefer a web-based interface over the CLI, you can launch the **Gemini Security Chat UI**. This provides a conversational SOC dashboard.
+If you prefer a web-based interface over the CLI, you can launch the **VBG Security Chat UI**. This provides a conversational SOC dashboard.
 
 ### Starting the UI
 1. Run the start command:
@@ -38,7 +38,7 @@ If you prefer a web-based interface over the CLI, you can launch the **Gemini Se
 
 The `security-prioritizer` and `compliance-checker` skills require a connection to your PostgreSQL database (`vuln_db`).
 
-Add this to your Gemini CLI `config.json` (usually located in `~/.config/gemini-cli/config.json` or managed via `/settings`):
+Add this to your VBG CLI `config.json` (usually located in `~/.config/gemini-cli/config.json` or managed via `/settings`):
 
 ```json
 {
@@ -62,9 +62,9 @@ Add this to your Gemini CLI `config.json` (usually located in `~/.config/gemini-
 Understanding how data moves through this workspace:
 
 1.  **Ingestion**: Scripts in `scripts/` (e.g., `wiz_reingest.cjs`) pull data from Wiz/Tenable into **PostgreSQL**.
-2.  **Orchestration**: You ask **Gemini CLI** a question in the terminal.
-3.  **Analysis**: Gemini uses **Skills** (SQL queries + Logic) to correlate vulnerabilities with business context.
-4.  **Action**: Gemini generates an **HTML Report**, sends an **Email Alert**, or runs a **Validation Scan**.
+2.  **Orchestration**: You ask **VBG CLI** a question in the terminal.
+3.  **Analysis**: VBG uses **Skills** (SQL queries + Logic) to correlate vulnerabilities with business context.
+4.  **Action**: VBG generates an **HTML Report**, sends an **Email Alert**, or runs a **Validation Scan**.
 
 ---
 

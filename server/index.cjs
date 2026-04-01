@@ -78,7 +78,7 @@ app.post('/api/chat', async (req, res) => {
   if (!handled) {
     res.json({ 
       role: 'assistant', 
-      content: `I'm your Gemini Security Analyst. I can help you prioritize vulnerabilities, enrich IPs, or run autonomous pulses. Try asking: "What are my top 10 risks?"` 
+      content: `I'm your VBG Security Analyst. I can help you prioritize vulnerabilities, enrich IPs, or run autonomous pulses. Try asking: "What are my top 10 risks?"` 
     });
   }
 });

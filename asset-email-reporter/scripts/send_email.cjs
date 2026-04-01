@@ -31,7 +31,7 @@ async function sendEmail() {
 
   try {
     const info = await transporter.sendMail({
-      from: `"Gemini CLI Security Analyst" <${SMTP_USER}>`,
+      from: `"VBG CLI Security Analyst" <${SMTP_USER}>`,
       to,
       subject,
       text: body,

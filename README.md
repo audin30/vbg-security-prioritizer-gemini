@@ -1,8 +1,8 @@
 # 🤖 Security Prioritizer & TI Skills Workspace
 
-> Built with Gemini CLI
+> Built with VBG CLI
 
-This project is a centralized repository for specialized security operations skills focused on threat intelligence and vulnerability prioritization. These skills empower **Gemini CLI** to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
+This project is a centralized repository for specialized security operations skills focused on threat intelligence and vulnerability prioritization. These skills empower **VBG CLI** to act as a security analyst by correlating data across multiple platforms and providing actionable insights directly in the terminal.
 
 ## 🚀 Quick Start (First Steps)
 
@@ -34,8 +34,8 @@ cp .env.example .env
 # Edit .env with your credentials
 ```
 
-### 3. Install Gemini CLI Skills
-Install the specialized security skills into your Gemini CLI environment:
+### 3. Install VBG CLI Skills
+Install the specialized security skills into your VBG CLI environment:
 ```bash
 # Example: Install the prioritizer and TI enricher
 gemini skills install ./security-prioritizer.skill --scope user
@@ -44,7 +44,7 @@ gemini skills install ./ti-master-enricher.skill --scope user
 *Note: You can install any of the `.skill` files found in the root directory.*
 
 ### 4. Initialize the Engine
-Reload the Gemini CLI to activate the newly installed skills:
+Reload the VBG CLI to activate the newly installed skills:
 ```bash
 /skills reload
 ```
@@ -55,6 +55,18 @@ Launch the interactive web-based chat interface:
 npm start
 ```
 *Access the UI at: **http://localhost:3001***
+
+## 🖥️ Interface Preview
+
+The **VBG Security Chat UI** provides a modern, conversational command center for your SOC operations.
+
+![Security Chat UI Preview](security_chat_preview.png)
+
+### Features:
+*   **Real-time Analysis**: "What are my top 10 risks?"
+*   **Instant Enrichment**: "Enrich IP 20.13.168.53"
+*   **Rich Data**: Formatted tables, risk-coded badges, and markdown support.
+*   **Integrated Reports**: One-click access to deep-dive HTML reports.
 
 ---
 
@@ -77,4 +89,4 @@ npm start
 
 ---
 
-🤖 Generated with Gemini CLI
+🤖 Generated with VBG CLI
