@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-const { execFileSync } = require('child_process');
-=======
 const { execSync } = require('child_process');
->>>>>>> 2717368 (Updated 031826)
 
 /**
  * Master TI Enricher Script
@@ -17,11 +13,7 @@ const { execSync } = require('child_process');
 
 function runSkillScript(scriptPath, args) {
     try {
-<<<<<<< HEAD
-        const output = execFileSync('node', [scriptPath, ...args], { encoding: 'utf8' });
-=======
         const output = execSync(`node ${scriptPath} ${args.join(' ')}`, { encoding: 'utf8' });
->>>>>>> 2717368 (Updated 031826)
         return JSON.parse(output);
     } catch (error) {
         return { error: error.message };
@@ -30,10 +22,10 @@ function runSkillScript(scriptPath, args) {
 
 async function main() {
     const args = process.argv.slice(2);
-    const type = args[0]; // ip, domain, or hash
+    const type = args[0] || 'ip'; // ip, domain, or hash
     const indicator = args[1];
 
-    if (!type || !indicator) {
+    if (!indicator) {
         console.log('Usage: node enrich_master.cjs <ip|domain|hash> <indicator>');
         process.exit(1);
     }
@@ -41,10 +33,11 @@ async function main() {
     console.log(`[*] Enriching ${type}: ${indicator}...`);
 
     // Paths to the individual skill scripts (assuming they are installed in the workspace)
+    // In .gemini/skills, these might be in the same folder structure
     const scripts = {
         greynoise: '../greynoise-community/scripts/greynoise_lookup.cjs',
         otx: '../alienvault-otx/scripts/otx_lookup.cjs',
-        vt: '../virustotal-checker/scripts/vt_lookup.cjs' // Assuming standard path
+        vt: '../virustotal-checker/scripts/vt_lookup.cjs' 
     };
 
     const results = {
@@ -80,22 +73,13 @@ async function main() {
         }
     }
 
-<<<<<<< HEAD
-    // VT Scoring
-    if (results.vt && !results.vt.error) {
-        maxScore += 20;
-        if (results.vt.malicious > 0) {
-            score += Math.min(results.vt.malicious, 20);
-            findings.push(`VirusTotal: ${results.vt.malicious} engines flagged`);
-=======
     // VT Scoring (Simplified for this script)
     if (results.vt && !results.vt.error) {
         maxScore += 20;
-        // Logic depends on the VT script output format, usually look for positives
-        if (results.vt.positives > 0) {
-            score += Math.min(results.vt.positives, 20);
-            findings.push(`VirusTotal: ${results.vt.positives} engines flagged`);
->>>>>>> 2717368 (Updated 031826)
+        const positives = results.vt.positives || results.vt.malicious || 0;
+        if (positives > 0) {
+            score += Math.min(positives, 20);
+            findings.push(`VirusTotal: ${positives} engines flagged`);
         }
     }
 
@@ -109,11 +93,7 @@ async function main() {
         raw_summaries: {
             greynoise: results.greynoise ? results.greynoise.classification : 'N/A',
             otx_pulses: results.otx ? results.otx.pulse_count : 'N/A',
-<<<<<<< HEAD
-            vt_malicious: results.vt ? results.vt.malicious : 'N/A'
-=======
-            vt_positives: results.vt ? results.vt.positives : 'N/A'
->>>>>>> 2717368 (Updated 031826)
+            vt_positives: results.vt ? (results.vt.positives || results.vt.malicious || 'N/A') : 'N/A'
         }
     };
 

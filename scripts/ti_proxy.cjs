@@ -17,16 +17,16 @@ if (!indicator) {
 }
 
 try {
-  // Use the existing TI Master Enricher skill
-  const masterScript = "/Users/secu/.gemini/skills/ti-master-enricher/scripts/enrich_master.cjs";
+  // Use the local TI Master Enricher skill script
+  const masterScript = path.join(__dirname, '..', 'ti-master-enricher/scripts/enrich_master.cjs');
   
-  // Set environment variables from current process (the server will have them)
-  const output = execSync(\`node \${masterScript} \${type} \${indicator}\`, {
+  // Execute and return JSON output
+  const output = execSync(`node ${masterScript} ${type} ${indicator}`, {
     env: process.env,
     encoding: 'utf8'
   });
 
   console.log(output);
 } catch (e) {
-  console.error(\`TI Enrichment failed: \${e.message}\`);
+  console.error(`TI Enrichment failed: ${e.message}`);
 }
